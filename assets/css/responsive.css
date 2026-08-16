@@ -1,0 +1,579 @@
+/* =========================================================
+   CRUD MASTER - RESPONSIVE STYLES
+   ========================================================= */
+
+
+/* =========================================================
+   1. LARGE TABLET / SMALL DESKTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    :root {
+        --sidebar-width: 230px;
+    }
+
+    .page-content {
+        padding: 24px;
+    }
+
+    .topbar {
+        padding: 0 24px;
+    }
+
+    .footer {
+        padding: 16px 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns:
+            minmax(0, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   2. TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    :root {
+        --sidebar-width: 250px;
+    }
+
+
+    /* Sidebar */
+
+    .sidebar {
+        transform: translateX(-100%);
+
+        box-shadow:
+            8px 0 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* Main */
+
+    #main {
+        width: 100%;
+
+        margin-left: 0;
+    }
+
+
+    /* Topbar */
+
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    /* Content */
+
+    .page-content {
+        padding: 22px;
+    }
+
+    .topbar {
+        padding: 0 22px;
+    }
+
+    .footer {
+        padding: 16px 22px;
+    }
+
+
+    /* Dashboard */
+
+    .dashboard-grid {
+        grid-template-columns:
+            minmax(0, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   3. MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    :root {
+        --topbar-height: 64px;
+    }
+
+
+    /* =========================
+       TOPBAR
+    ========================== */
+
+    .topbar {
+        height: var(--topbar-height);
+
+        padding:
+            0 14px;
+    }
+
+    .topbar-left {
+        gap: 10px;
+
+        min-width: 0;
+    }
+
+    .topbar-right {
+        gap: 8px;
+    }
+
+    .page-heading {
+        min-width: 0;
+    }
+
+    .page-heading h1 {
+        max-width: 140px;
+
+        overflow: hidden;
+
+        white-space: nowrap;
+
+        text-overflow: ellipsis;
+
+        font-size: 16px;
+    }
+
+    .page-heading p {
+        display: none;
+    }
+
+
+    /* =========================
+       USER
+    ========================== */
+
+    .user-info {
+        display: none;
+    }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .icon-button {
+        width: 34px;
+        height: 34px;
+    }
+
+
+    /* =========================
+       PAGE CONTENT
+    ========================== */
+
+    .page-content {
+        padding: 16px 14px;
+    }
+
+
+    /* =========================
+       PAGE INTRO
+    ========================== */
+
+    .page-intro {
+        display: block;
+
+        margin-bottom: 18px;
+    }
+
+    .page-intro h2 {
+        font-size: 19px;
+    }
+
+    .page-intro p {
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       STATISTICS
+    ========================== */
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+
+        margin-bottom: 14px;
+    }
+
+    .stat-card {
+        gap: 10px;
+
+        padding: 14px;
+    }
+
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+
+        border-radius: 9px;
+
+        font-size: 15px;
+    }
+
+    .stat-label {
+        font-size: 9px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+
+    /* =========================
+       DASHBOARD
+    ========================== */
+
+    .dashboard-grid {
+        gap: 14px;
+
+        margin-bottom: 14px;
+    }
+
+
+    /* =========================
+       CARD
+    ========================== */
+
+    .card-header {
+        padding: 15px;
+    }
+
+    .card-header h3 {
+        font-size: 13px;
+    }
+
+    .card-header p {
+        font-size: 10px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+
+    /* =========================
+       ACTIVITY
+    ========================== */
+
+    .activity-list {
+        min-height: 190px;
+
+        padding: 15px;
+    }
+
+    .empty-state {
+        min-height: 150px;
+    }
+
+
+    /* =========================
+       QUICK ACTIONS
+    ========================== */
+
+    .quick-actions {
+        gap: 8px;
+
+        padding: 15px;
+    }
+
+    .quick-action {
+        min-height: 75px;
+
+        padding: 10px;
+
+        font-size: 10px;
+    }
+
+
+    /* =========================
+       TABLE
+    ========================== */
+
+    .data-table {
+        min-width: 560px;
+    }
+
+    .data-table th {
+        padding:
+            10px 14px;
+
+        font-size: 9px;
+    }
+
+    .data-table td {
+        padding:
+            12px 14px;
+
+        font-size: 11px;
+    }
+
+
+    /* =========================
+       TOOLBAR
+    ========================== */
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+        width: 100%;
+    }
+
+    .toolbar-right {
+        justify-content: flex-end;
+    }
+
+    .toolbar-search {
+        max-width: none;
+    }
+
+
+    /* =========================
+       FORMS
+    ========================== */
+
+    .form-grid,
+    .form-grid-3 {
+        grid-template-columns:
+            minmax(0, 1fr);
+
+        gap: 13px;
+    }
+
+    .form-grid-full {
+        grid-column: auto;
+    }
+
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-container {
+        max-height:
+            calc(100vh - 24px);
+
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding:
+            15px;
+    }
+
+    .modal-body {
+        padding:
+            15px;
+    }
+
+    .modal-footer {
+        padding:
+            13px 15px;
+    }
+
+    .modal-footer .btn {
+        flex: 1;
+    }
+
+
+    /* =========================
+       PAGINATION
+    ========================== */
+
+    .pagination {
+        flex-direction: column;
+        align-items: stretch;
+
+        padding:
+            12px 15px;
+    }
+
+    .pagination-info {
+        text-align: center;
+    }
+
+    .pagination-controls {
+        justify-content: center;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    .footer {
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding:
+            14px;
+
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   4. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .page-content {
+        padding:
+            14px 10px;
+    }
+
+    .topbar {
+        padding:
+            0 10px;
+    }
+
+
+    /* Stats */
+
+    .stats-grid {
+        gap: 8px;
+    }
+
+    .stat-card {
+        padding: 11px;
+
+        gap: 8px;
+    }
+
+    .stat-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 13px;
+    }
+
+    .stat-value {
+        font-size: 16px;
+    }
+
+
+    /* Quick actions */
+
+    .quick-actions {
+        grid-template-columns:
+            minmax(0, 1fr);
+    }
+
+    .quick-action {
+        min-height: 55px;
+
+        flex-direction: row;
+
+        justify-content: flex-start;
+
+        padding:
+            10px 12px;
+    }
+
+
+    /* Page heading */
+
+    .page-heading h1 {
+        max-width: 110px;
+
+        font-size: 15px;
+    }
+
+
+    /* Buttons */
+
+    .btn {
+        min-height: 36px;
+
+        padding:
+            8px 11px;
+
+        font-size: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   5. LANDSCAPE MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    .sidebar {
+        overflow-y: auto;
+    }
+
+    .sidebar-nav {
+        padding:
+            12px;
+    }
+
+    .nav-section {
+        margin-bottom: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   6. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
