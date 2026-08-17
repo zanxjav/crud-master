@@ -1,3 +1,16 @@
+// AUTO PURGE ALL LEGACY DUMMY DATA IMMEDIATELY
+try {
+    const dummyWords = ["MacBook", "Logitech", "Dell", "Mesh Chair", "Cloud Hosting", "Standing Desk", "DATA-00", "ACT-INIT"];
+    const rawData = localStorage.getItem("crud_master_data") || "";
+    const rawAct = localStorage.getItem("crud_master_activity") || "";
+    if (dummyWords.some(w => rawData.includes(w) || rawAct.includes(w))) {
+        localStorage.setItem("crud_master_data", JSON.stringify([]));
+        localStorage.setItem("crud_master_activity", JSON.stringify([]));
+    }
+} catch (e) {
+    console.error(e);
+}
+
 import { initializeCrud } from "./crud.js";
 import { initializeDashboard } from "./dashboard.js";
 import { initUsers } from "./users.js";

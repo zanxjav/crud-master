@@ -30,10 +30,7 @@ const $ = (id) => document.getElementById(id);
 // STORAGE
 // =========================================================
 
-const SAMPLE_DUMMY_IDS = new Set([
-    "DATA-001", "DATA-002", "DATA-003", 
-    "DATA-004", "DATA-005", "DATA-006"
-]);
+const DUMMY_KEYWORDS = ["MacBook", "Logitech", "Dell", "Mesh Chair", "Cloud Hosting", "Standing Desk", "DATA-00"];
 
 function readData() {
     try {
@@ -41,16 +38,12 @@ function readData() {
         let data = raw ? JSON.parse(raw) : [];
         if (!Array.isArray(data)) return [];
         
-        // Bersihkan data dummy/sample secara otomatis jika sempat tersimpan
-        const cleaned = data.filter(item => 
-            !SAMPLE_DUMMY_IDS.has(item.id) &&
-            item.id !== "DATA-001" &&
-            item.id !== "DATA-002" &&
-            item.id !== "DATA-003" &&
-            item.id !== "DATA-004" &&
-            item.id !== "DATA-005" &&
-            item.id !== "DATA-006"
-        );
+        // Bersihkan data dummy/sample secara total
+        const cleaned = data.filter(item => {
+            const id = String(item.id || "");
+            const name = String(item.name || "");
+            return !DUMMY_KEYWORDS.some(kw => id.includes(kw) || name.includes(kw));
+        });
         
         if (cleaned.length !== data.length) {
             writeData(cleaned);
@@ -75,11 +68,13 @@ function readActivities() {
         let data = raw ? JSON.parse(raw) : [];
         if (!Array.isArray(data)) return [];
         
-        // Bersihkan riwayat dummy otomatis
-        const cleaned = data.filter(item => 
-            !String(item.id).startsWith("ACT-INIT") &&
-            !SAMPLE_DUMMY_IDS.has(item.recordId)
-        );
+        // Bersihkan riwayat dummy total
+        const cleaned = data.filter(item => {
+            const msg = String(item.message || "");
+            const id = String(item.id || "");
+            const recId = String(item.recordId || "");
+            return !DUMMY_KEYWORDS.some(kw => msg.includes(kw) || id.includes(kw) || recId.includes(kw)) && !id.startsWith("ACT-INIT");
+        });
         
         if (cleaned.length !== data.length) {
             writeActivities(cleaned);
