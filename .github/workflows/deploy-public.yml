@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - "public/**"
+      - "assets/**"
+      - "components/**"
+      - "pages/**"
+      - "index.html"
       - ".github/workflows/deploy-public.yml"
   workflow_dispatch:
 
@@ -26,13 +30,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Prepare website
+        run: |
+          mkdir -p _site/admin
+
+          # Public website
+          cp -r public/. _site/
+
+          # Admin panel
+          cp index.html _site/admin/
+          cp -r assets _site/admin/
+          cp -r components _site/admin/
+          cp -r pages _site/admin/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Public Website
+      - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "./public"
+          path: "./_site"
 
       - name: Deploy to GitHub Pages
         id: deployment
