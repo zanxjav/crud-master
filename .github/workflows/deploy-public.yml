@@ -1,15 +1,14 @@
-name: Deploy Public Website
+name: Deploy CRUD Master
 
 on:
   push:
     branches:
       - main
     paths:
-      - "public/**"
+      - "index.html"
       - "assets/**"
       - "components/**"
       - "pages/**"
-      - "index.html"
       - ".github/workflows/deploy-public.yml"
   workflow_dispatch:
 
@@ -32,16 +31,19 @@ jobs:
 
       - name: Prepare website
         run: |
-          mkdir -p _site/admin
+          mkdir -p _site
 
-          # Public website
-          cp -r public/. _site/
+          # Main application
+          cp index.html _site/
 
-          # Admin panel
-          cp index.html _site/admin/
-          cp -r assets _site/admin/
-          cp -r components _site/admin/
-          cp -r pages _site/admin/
+          # CSS, JavaScript, images
+          cp -r assets _site/
+
+          # HTML components
+          cp -r components _site/
+
+          # Application pages
+          cp -r pages _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
