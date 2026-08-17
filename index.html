@@ -15,214 +15,268 @@
 
     <title>Business Management System</title>
 
-    <!-- =========================
-         CSS
-    ========================== -->
-
-    <link
-        rel="stylesheet"
-        href="./assets/css/style.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="./assets/css/components.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="./assets/css/responsive.css"
-    >
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 
 <body>
 
-    <!-- =========================
-         APP CONTAINER
-    ========================== -->
+<div id="app">
 
-    <div id="app">
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-        <!-- =========================
-             SIDEBAR
-        ========================== -->
+    <aside id="sidebar" class="sidebar">
 
-        <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
 
-            <div class="sidebar-header">
+            <a href="./index.html" class="brand">
 
-                <a href="./index.html" class="brand">
+                <img
+                    src="./assets/img/logo.svg"
+                    alt="Logo"
+                    class="brand-logo"
+                >
 
-                    <img
-                        src="./assets/img/logo.svg"
-                        alt="Logo"
-                        class="brand-logo"
-                    >
+                <div class="brand-text">
+                    <span class="brand-name">
+                        Business System
+                    </span>
 
-                    <div class="brand-text">
-                        <span class="brand-name">
-                            Business System
-                        </span>
+                    <span class="brand-subtitle">
+                        Management Dashboard
+                    </span>
+                </div>
 
-                        <span class="brand-subtitle">
-                            Management Dashboard
-                        </span>
-                    </div>
+            </a>
 
+            <button
+                type="button"
+                id="sidebarClose"
+                class="sidebar-close"
+                aria-label="Close sidebar"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a
+                    href="#dashboard"
+                    class="nav-item active"
+                    data-page="dashboard"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-label">Dashboard</span>
                 </a>
 
-                <button
-                    type="button"
-                    id="sidebarClose"
-                    class="sidebar-close"
-                    aria-label="Close sidebar"
+                <a
+                    href="#data"
+                    class="nav-item"
+                    data-page="data"
                 >
-                    ×
-                </button>
+                    <span class="nav-icon">▤</span>
+                    <span class="nav-label">Data</span>
+                </a>
+
+                <a
+                    href="#reports"
+                    class="nav-item"
+                    data-page="reports"
+                >
+                    <span class="nav-icon">▥</span>
+                    <span class="nav-label">Reports</span>
+                </a>
 
             </div>
 
 
-            <!-- =========================
-                 NAVIGATION
-            ========================== -->
+            <div class="nav-section">
 
-            <nav class="sidebar-nav">
+                <span class="nav-section-title">
+                    MANAGEMENT
+                </span>
 
-                <div class="nav-section">
-
-                    <span class="nav-section-title">
-                        MAIN
-                    </span>
-
-                    <a
-                        href="#dashboard"
-                        class="nav-item active"
-                        data-page="dashboard"
-                    >
-                        <span class="nav-icon">⌂</span>
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-
-                    <a
-                        href="#data"
-                        class="nav-item"
-                        data-page="data"
-                    >
-                        <span class="nav-icon">▤</span>
-                        <span class="nav-label">Data</span>
-                    </a>
-
-                    <a
-                        href="#reports"
-                        class="nav-item"
-                        data-page="reports"
-                    >
-                        <span class="nav-icon">▥</span>
-                        <span class="nav-label">Reports</span>
-                    </a>
-
-                </div>
-
-
-                <div class="nav-section">
-
-                    <span class="nav-section-title">
-                        MANAGEMENT
-                    </span>
-
-                    <a
-                        href="#users"
-                        class="nav-item"
-                        data-page="users"
-                    >
-                        <span class="nav-icon">♙</span>
-                        <span class="nav-label">Users</span>
-                    </a>
-
-                </div>
-
-
-                <div class="nav-section">
-
-                    <span class="nav-section-title">
-                        ACCOUNT
-                    </span>
-
-                    <a
-                        href="#profile"
-                        class="nav-item"
-                        data-page="profile"
-                    >
-                        <span class="nav-icon">◎</span>
-                        <span class="nav-label">Profile</span>
-                    </a>
-
-                    <a
-                        href="#settings"
-                        class="nav-item"
-                        data-page="settings"
-                    >
-                        <span class="nav-icon">⚙</span>
-                        <span class="nav-label">Settings</span>
-                    </a>
-
-                </div>
-
-            </nav>
-
-
-            <!-- =========================
-                 SIDEBAR FOOTER
-            ========================== -->
-
-            <div class="sidebar-footer">
-
-                <button
-                    type="button"
-                    id="logoutButton"
-                    class="logout-button"
+                <a
+                    href="#users"
+                    class="nav-item"
+                    data-page="users"
                 >
-                    <span class="nav-icon">↪</span>
-                    <span>Logout</span>
-                </button>
+                    <span class="nav-icon">♙</span>
+                    <span class="nav-label">Users</span>
+                </a>
 
             </div>
 
-        </aside>
+
+            <div class="nav-section">
+
+                <span class="nav-section-title">
+                    ACCOUNT
+                </span>
+
+                <a
+                    href="#profile"
+                    class="nav-item"
+                    data-page="profile"
+                >
+                    <span class="nav-icon">◎</span>
+                    <span class="nav-label">Profile</span>
+                </a>
+
+                <a
+                    href="#settings"
+                    class="nav-item"
+                    data-page="settings"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+
+            </div>
+
+        </nav>
 
 
-        <!-- =========================
-             MAIN AREA
-        ========================== -->
+        <!-- SIDEBAR FOOTER -->
 
-        <main id="main">
+        <div class="sidebar-footer">
 
-            <!-- =========================
-                 TOPBAR
-            ========================== -->
+            <button
+                type="button"
+                id="logoutButton"
+                class="logout-button"
+            >
+                <span class="nav-icon">↪</span>
+                <span>Logout</span>
+            </button>
 
-            <header class="topbar">
+        </div>
 
-                <div class="topbar-left">
+    </aside>
 
-                    <button
-                        type="button"
-                        id="sidebarToggle"
-                        class="sidebar-toggle"
-                        aria-label="Open sidebar"
-                    >
-                        ☰
-                    </button>
 
-                    <div class="page-heading">
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-                        <h1 id="pageTitle">
-                            Dashboard
-                        </h1>
+    <main id="main">
 
-                        <p id="pageSubtitle">
-                            Overview of your business
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    id="sidebarToggle"
+                    class="sidebar-toggle"
+                    aria-label="Open sidebar"
+                >
+                    ☰
+                </button>
+
+                <div class="page-heading">
+
+                    <h1 id="pageTitle">
+                        Dashboard
+                    </h1>
+
+                    <p id="pageSubtitle">
+                        Overview of your business
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button
+                    type="button"
+                    id="notificationButton"
+                    class="icon-button"
+                    aria-label="Notifications"
+                >
+                    ♢
+                </button>
+
+
+                <div class="user-menu">
+
+                    <div class="user-avatar">
+                        A
+                    </div>
+
+                    <div class="user-info">
+
+                        <span
+                            id="currentUserName"
+                            class="user-name"
+                        >
+                            Admin
+                        </span>
+
+                        <span
+                            id="currentUserRole"
+                            class="user-role"
+                        >
+                            Administrator
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+        <section
+            id="pageContent"
+            class="page-content"
+        >
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <div
+                id="dashboardPage"
+                class="page active"
+            >
+
+                <div class="page-intro">
+
+                    <div>
+
+                        <h2>
+                            Welcome back, Admin 👋
+                        </h2>
+
+                        <p>
+                            Here's what's happening with your business today.
                         </p>
 
                     </div>
@@ -230,340 +284,124 @@
                 </div>
 
 
-                <div class="topbar-right">
+                <!-- STATISTICS -->
 
-                    <button
-                        type="button"
-                        id="notificationButton"
-                        class="icon-button"
-                        aria-label="Notifications"
-                    >
-                        ♢
-                    </button>
+                <div class="stats-grid">
 
+                    <article class="stat-card">
 
-                    <div class="user-menu">
-
-                        <div class="user-avatar">
-                            A
+                        <div class="stat-icon">
+                            #
                         </div>
 
-                        <div class="user-info">
+                        <div class="stat-content">
 
-                            <span
-                                id="currentUserName"
-                                class="user-name"
-                            >
-                                Admin
+                            <span class="stat-label">
+                                Total Data
                             </span>
 
-                            <span
-                                id="currentUserRole"
-                                class="user-role"
+                            <strong
+                                id="totalData"
+                                class="stat-value"
                             >
-                                Administrator
-                            </span>
+                                0
+                            </strong>
 
                         </div>
 
-                    </div>
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span class="stat-label">
+                                Active
+                            </span>
+
+                            <strong
+                                id="activeData"
+                                class="stat-value"
+                            >
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            +
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span class="stat-label">
+                                Added Today
+                            </span>
+
+                            <strong
+                                id="todayData"
+                                class="stat-value"
+                            >
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icon">
+                            ↑
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span class="stat-label">
+                                Activity
+                            </span>
+
+                            <strong
+                                id="activityData"
+                                class="stat-value"
+                            >
+                                0
+                            </strong>
+
+                        </div>
+
+                    </article>
 
                 </div>
 
-            </header>
 
+                <!-- DASHBOARD GRID -->
 
-            <!-- =========================
-                 PAGE CONTENT
-            ========================== -->
+                <div class="dashboard-grid">
 
-            <section
-                id="pageContent"
-                class="page-content"
-            >
-
-                <!-- =========================
-                     DASHBOARD
-                ========================== -->
-
-                <div
-                    id="dashboardPage"
-                    class="page active"
-                >
-
-                    <div class="page-intro">
-
-                        <div>
-                            <h2>Welcome back, Admin 👋</h2>
-
-                            <p>
-                                Here's what's happening with your business today.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <!-- =========================
-                         STATISTICS
-                    ========================== -->
-
-                    <div class="stats-grid">
-
-                        <article class="stat-card">
-
-                            <div class="stat-icon">
-                                #
-                            </div>
-
-                            <div class="stat-content">
-
-                                <span class="stat-label">
-                                    Total Data
-                                </span>
-
-                                <strong
-                                    id="totalData"
-                                    class="stat-value"
-                                >
-                                    0
-                                </strong>
-
-                            </div>
-
-                        </article>
-
-
-                        <article class="stat-card">
-
-                            <div class="stat-icon">
-                                ✓
-                            </div>
-
-                            <div class="stat-content">
-
-                                <span class="stat-label">
-                                    Active
-                                </span>
-
-                                <strong
-                                    id="activeData"
-                                    class="stat-value"
-                                >
-                                    0
-                                </strong>
-
-                            </div>
-
-                        </article>
-
-
-                        <article class="stat-card">
-
-                            <div class="stat-icon">
-                                +
-                            </div>
-
-                            <div class="stat-content">
-
-                                <span class="stat-label">
-                                    Added Today
-                                </span>
-
-                                <strong
-                                    id="todayData"
-                                    class="stat-value"
-                                >
-                                    0
-                                </strong>
-
-                            </div>
-
-                        </article>
-
-
-                        <article class="stat-card">
-
-                            <div class="stat-icon">
-                                ↑
-                            </div>
-
-                            <div class="stat-content">
-
-                                <span class="stat-label">
-                                    Activity
-                                </span>
-
-                                <strong
-                                    id="activityData"
-                                    class="stat-value"
-                                >
-                                    0
-                                </strong>
-
-                            </div>
-
-                        </article>
-
-                    </div>
-
-
-                    <!-- =========================
-                         DASHBOARD GRID
-                    ========================== -->
-
-                    <div class="dashboard-grid">
-
-
-                        <!-- Recent Activity -->
-
-                        <section class="card">
-
-                            <div class="card-header">
-
-                                <div>
-                                    <h3>Recent Activity</h3>
-
-                                    <p>
-                                        Latest activity in the system
-                                    </p>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    class="text-button"
-                                >
-                                    View All
-                                </button>
-
-                            </div>
-
-
-                            <div
-                                id="recentActivity"
-                                class="activity-list"
-                            >
-
-                                <div class="empty-state">
-
-                                    <div class="empty-icon">
-                                        ○
-                                    </div>
-
-                                    <h4>
-                                        No activity yet
-                                    </h4>
-
-                                    <p>
-                                        Recent system activity will appear here.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-
-                        <!-- Quick Actions -->
-
-                        <section class="card">
-
-                            <div class="card-header">
-
-                                <div>
-                                    <h3>Quick Actions</h3>
-
-                                    <p>
-                                        Common actions
-                                    </p>
-                                </div>
-
-                            </div>
-
-
-                            <div class="quick-actions">
-
-                                <button
-                                    type="button"
-                                    class="quick-action"
-                                    data-action="add"
-                                >
-                                    <span class="quick-action-icon">
-                                        +
-                                    </span>
-
-                                    <span>
-                                        Add Data
-                                    </span>
-                                </button>
-
-
-                                <button
-                                    type="button"
-                                    class="quick-action"
-                                    data-action="users"
-                                >
-                                    <span class="quick-action-icon">
-                                        ♙
-                                    </span>
-
-                                    <span>
-                                        Manage Users
-                                    </span>
-                                </button>
-
-
-                                <button
-                                    type="button"
-                                    class="quick-action"
-                                    data-action="reports"
-                                >
-                                    <span class="quick-action-icon">
-                                        ▥
-                                    </span>
-
-                                    <span>
-                                        View Reports
-                                    </span>
-                                </button>
-
-
-                                <button
-                                    type="button"
-                                    class="quick-action"
-                                    data-action="settings"
-                                >
-                                    <span class="quick-action-icon">
-                                        ⚙
-                                    </span>
-
-                                    <span>
-                                        Settings
-                                    </span>
-                                </button>
-
-                            </div>
-
-                        </section>
-
-                    </div>
-
-
-                    <!-- =========================
-                         DATA PREVIEW
-                    ========================== -->
-
-                    <section class="card data-preview-card">
+                    <section class="card">
 
                         <div class="card-header">
 
                             <div>
 
-                                <h3>Latest Data</h3>
+                                <h3>
+                                    Recent Activity
+                                </h3>
 
                                 <p>
-                                    Recently added records
+                                    Latest activity in the system
                                 </p>
 
                             </div>
@@ -571,10 +409,470 @@
                             <button
                                 type="button"
                                 class="text-button"
-                                data-page-link="data"
                             >
                                 View All
                             </button>
+
+                        </div>
+
+
+                        <div
+                            id="recentActivity"
+                            class="activity-list"
+                        >
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    ○
+                                </div>
+
+                                <h4>
+                                    No activity yet
+                                </h4>
+
+                                <p>
+                                    Recent system activity will appear here.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <section class="card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Quick Actions
+                                </h3>
+
+                                <p>
+                                    Common actions
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-action="add"
+                            >
+                                <span class="quick-action-icon">
+                                    +
+                                </span>
+
+                                <span>
+                                    Add Data
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-action="users"
+                            >
+                                <span class="quick-action-icon">
+                                    ♙
+                                </span>
+
+                                <span>
+                                    Manage Users
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-action="reports"
+                            >
+                                <span class="quick-action-icon">
+                                    ▥
+                                </span>
+
+                                <span>
+                                    View Reports
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-action="settings"
+                            >
+                                <span class="quick-action-icon">
+                                    ⚙
+                                </span>
+
+                                <span>
+                                    Settings
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- LATEST DATA -->
+
+                <section class="card data-preview-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Latest Data
+                            </h3>
+
+                            <p>
+                                Recently added records
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="text-button"
+                            data-page-link="data"
+                        >
+                            View All
+                        </button>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table class="data-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="latestDataTable">
+
+                                <tr>
+
+                                    <td
+                                        colspan="5"
+                                        class="table-empty"
+                                    >
+                                        No data available
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 DATA PAGE
+            ================================================== -->
+
+            <div
+                id="dataPage"
+                class="page"
+                hidden
+            >
+
+                <div class="page-intro">
+
+                    <div>
+
+                        <h2>
+                            Data Management
+                        </h2>
+
+                        <p>
+                            Create, manage, search, filter, and organize your records.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="data-stats-grid">
+
+                    <div class="data-stat-card">
+
+                        <div class="data-stat-icon">
+                            #
+                        </div>
+
+                        <div>
+                            <span>Total Records</span>
+                            <strong id="dataStatTotal">0</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="data-stat-card">
+
+                        <div class="data-stat-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>Active</span>
+                            <strong id="dataStatActive">0</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="data-stat-card">
+
+                        <div class="data-stat-icon">
+                            ○
+                        </div>
+
+                        <div>
+                            <span>Inactive</span>
+                            <strong id="dataStatInactive">0</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="data-stat-card">
+
+                        <div class="data-stat-icon">
+                            +
+                        </div>
+
+                        <div>
+                            <span>Added Today</span>
+                            <strong id="dataStatToday">0</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <section class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                All Data
+                            </h3>
+
+                            <p id="dataSummaryText">
+                                Manage your business records from one place.
+                            </p>
+
+                        </div>
+
+
+                        <div class="data-header-actions">
+
+                            <button
+                                type="button"
+                                id="exportDataButton"
+                                class="btn btn-secondary btn-sm"
+                            >
+                                ↓ Export CSV
+                            </button>
+
+                            <button
+                                type="button"
+                                id="importDataButton"
+                                class="btn btn-secondary btn-sm"
+                            >
+                                ↑ Import
+                            </button>
+
+                            <input
+                                type="file"
+                                id="importDataInput"
+                                accept=".csv,text/csv"
+                                hidden
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="toolbar data-toolbar-v2">
+
+                            <div class="toolbar-left data-filters">
+
+                                <div class="search-box toolbar-search">
+
+                                    <span class="search-box-icon">
+                                        ⌕
+                                    </span>
+
+                                    <input
+                                        type="search"
+                                        id="dataSearch"
+                                        class="form-input"
+                                        placeholder="Search name, category, ID..."
+                                        autocomplete="off"
+                                    >
+
+                                </div>
+
+
+                                <select
+                                    id="statusFilter"
+                                    class="form-select filter-select"
+                                >
+                                    <option value="all">
+                                        All Status
+                                    </option>
+
+                                    <option value="active">
+                                        Active
+                                    </option>
+
+                                    <option value="inactive">
+                                        Inactive
+                                    </option>
+                                </select>
+
+
+                                <select
+                                    id="categoryFilter"
+                                    class="form-select filter-select"
+                                >
+                                    <option value="all">
+                                        All Categories
+                                    </option>
+                                </select>
+
+
+                                <input
+                                    type="date"
+                                    id="dateFromFilter"
+                                    class="form-input date-filter"
+                                    title="From date"
+                                >
+
+                                <input
+                                    type="date"
+                                    id="dateToFilter"
+                                    class="form-input date-filter"
+                                    title="To date"
+                                >
+
+
+                                <button
+                                    type="button"
+                                    id="clearDataFilters"
+                                    class="btn btn-ghost btn-sm"
+                                >
+                                    Clear
+                                </button>
+
+                            </div>
+
+
+                            <div class="toolbar-right">
+
+                                <button
+                                    type="button"
+                                    id="addDataButton"
+                                    class="btn btn-primary"
+                                >
+                                    <span>+</span>
+                                    Add Data
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="bulkActionsBar"
+                            class="bulk-actions-bar"
+                            hidden
+                        >
+
+                            <div class="bulk-selection-info">
+
+                                <strong id="selectedCount">
+                                    0
+                                </strong>
+
+                                selected
+
+                            </div>
+
+
+                            <div class="bulk-actions">
+
+                                <button
+                                    type="button"
+                                    id="bulkActivateButton"
+                                    class="btn btn-success btn-sm"
+                                >
+                                    Activate
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="bulkDeactivateButton"
+                                    class="btn btn-secondary btn-sm"
+                                >
+                                    Deactivate
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="bulkDeleteButton"
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    Delete
+                                </button>
+
+                            </div>
 
                         </div>
 
@@ -586,24 +884,86 @@
                                 <thead>
 
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
+
+                                        <th class="checkbox-column">
+
+                                            <input
+                                                type="checkbox"
+                                                id="selectAllData"
+                                                class="table-checkbox"
+                                                aria-label="Select all visible records"
+                                            >
+
+                                        </th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                class="table-sort"
+                                                data-sort="id"
+                                            >
+                                                ID <span>↕</span>
+                                            </button>
+                                        </th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                class="table-sort"
+                                                data-sort="name"
+                                            >
+                                                Name <span>↕</span>
+                                            </button>
+                                        </th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                class="table-sort"
+                                                data-sort="category"
+                                            >
+                                                Category <span>↕</span>
+                                            </button>
+                                        </th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                class="table-sort"
+                                                data-sort="status"
+                                            >
+                                                Status <span>↕</span>
+                                            </button>
+                                        </th>
+
+                                        <th>
+                                            <button
+                                                type="button"
+                                                class="table-sort"
+                                                data-sort="createdAt"
+                                            >
+                                                Created <span>↕</span>
+                                            </button>
+                                        </th>
+
+                                        <th>
+                                            Actions
+                                        </th>
+
                                     </tr>
 
                                 </thead>
 
-                                <tbody id="latestDataTable">
+
+                                <tbody id="dataTableBody">
 
                                     <tr>
 
                                         <td
-                                            colspan="5"
+                                            colspan="7"
                                             class="table-empty"
                                         >
-                                            No data available
+                                            Loading...
                                         </td>
 
                                     </tr>
@@ -614,275 +974,1538 @@
 
                         </div>
 
-                    </section>
+                    </div>
+
+
+                    <div class="pagination data-pagination">
+
+                        <div class="pagination-left">
+
+                            <span
+                                id="paginationInfo"
+                                class="pagination-info"
+                            >
+                                0 records
+                            </span>
+
+                            <label class="page-size-label">
+
+                                Rows
+
+                                <select
+                                    id="pageSizeSelect"
+                                    class="form-select page-size-select"
+                                >
+                                    <option value="8">8</option>
+                                    <option value="15">15</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+
+                            </label>
+
+                        </div>
+
+
+                        <div
+                            id="paginationControls"
+                            class="pagination-controls"
+                        ></div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 USERS PAGE
+            ================================================== -->
+
+            <div id="usersPage" class="page" hidden>
+
+                <div class="page-intro page-intro-actions">
+
+                    <div>
+
+                        <h2>
+                            User Management
+                        </h2>
+
+                        <p>
+                            Create, manage and control system users.
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="addUserButton"
+                        class="btn btn-primary"
+                    >
+                        + Add User
+                    </button>
 
                 </div>
 
 
-                <!-- =========================
-                     OTHER PAGE PLACEHOLDERS
-                ========================== -->
+                <div class="data-stats-grid user-stats-grid">
 
-                <div
-                    id="dataPage"
-                    class="page"
-                    hidden
-                >
-
-                    <div class="page-intro">
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">#</div>
                         <div>
-                            <h2>Data Management</h2>
-                            <p>Create, manage, search, filter, and organize your records.</p>
+                            <span>Total Users</span>
+                            <strong id="usersTotal">0</strong>
                         </div>
                     </div>
 
-                    <div class="data-stats-grid">
-                        <div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Records</span><strong id="dataStatTotal">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="dataStatActive">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="dataStatInactive">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">+</div><div><span>Added Today</span><strong id="dataStatToday">0</strong></div></div>
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">✓</div>
+                        <div>
+                            <span>Active</span>
+                            <strong id="usersActive">0</strong>
+                        </div>
                     </div>
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">A</div>
+                        <div>
+                            <span>Administrators</span>
+                            <strong id="usersAdmins">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">○</div>
+                        <div>
+                            <span>Inactive</span>
+                            <strong id="usersInactive">0</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <section class="card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                System Users
+                            </h3>
+
+                            <p>
+                                Manage access, roles and account status.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="toolbar">
+
+                            <div class="toolbar-left data-filters">
+
+                                <div class="search-box toolbar-search">
+
+                                    <span class="search-box-icon">
+                                        ⌕
+                                    </span>
+
+                                    <input
+                                        id="userSearch"
+                                        class="form-input"
+                                        placeholder="Search name or email..."
+                                    >
+
+                                </div>
+
+
+                                <select
+                                    id="userRoleFilter"
+                                    class="form-select filter-select"
+                                >
+
+                                    <option value="all">
+                                        All Roles
+                                    </option>
+
+                                    <option value="admin">
+                                        Admin
+                                    </option>
+
+                                    <option value="manager">
+                                        Manager
+                                    </option>
+
+                                    <option value="staff">
+                                        Staff
+                                    </option>
+
+                                </select>
+
+
+                                <select
+                                    id="userStatusFilter"
+                                    class="form-select filter-select"
+                                >
+
+                                    <option value="all">
+                                        All Status
+                                    </option>
+
+                                    <option value="active">
+                                        Active
+                                    </option>
+
+                                    <option value="inactive">
+                                        Inactive
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table class="data-table">
+
+                                <thead>
+
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="usersTableBody"></tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- USER MODAL -->
+
+                <div
+                    id="userModal"
+                    class="modal"
+                    hidden
+                >
+
+                    <div class="modal-container modal-lg">
+
+                        <div class="modal-header">
+
+                            <h3
+                                id="userModalTitle"
+                                class="modal-title"
+                            >
+                                Add New User
+                            </h3>
+
+                            <button
+                                id="userModalClose"
+                                class="modal-close"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+
+                        <form id="userForm">
+
+                            <div class="modal-body">
+
+                                <div class="form-grid">
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Full Name *
+                                        </label>
+
+                                        <input
+                                            id="userName"
+                                            class="form-input"
+                                            required
+                                            maxlength="100"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Email *
+                                        </label>
+
+                                        <input
+                                            id="userEmail"
+                                            type="email"
+                                            class="form-input"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Role
+                                        </label>
+
+                                        <select
+                                            id="userRole"
+                                            class="form-select"
+                                        >
+
+                                            <option value="admin">
+                                                Admin
+                                            </option>
+
+                                            <option value="manager">
+                                                Manager
+                                            </option>
+
+                                            <option
+                                                value="staff"
+                                                selected
+                                            >
+                                                Staff
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Status
+                                        </label>
+
+                                        <select
+                                            id="userStatus"
+                                            class="form-select"
+                                        >
+
+                                            <option value="active">
+                                                Active
+                                            </option>
+
+                                            <option value="inactive">
+                                                Inactive
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="form-group form-grid-full">
+
+                                        <label class="form-label">
+                                            Password
+                                            <span class="muted">
+                                                (demo only)
+                                            </span>
+                                        </label>
+
+                                        <input
+                                            id="userPassword"
+                                            type="password"
+                                            class="form-input"
+                                            minlength="6"
+                                            placeholder="Required when creating a user"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer">
+
+                                <button
+                                    type="button"
+                                    id="userModalCancel"
+                                    class="btn btn-secondary"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    class="btn btn-primary"
+                                >
+                                    Save User
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPORTS PAGE
+            ================================================== -->
+
+            <div id="reportsPage" class="page" hidden>
+
+                <div class="page-intro page-intro-actions">
+
+                    <div>
+
+                        <h2>
+                            Reports & Analytics
+                        </h2>
+
+                        <p>
+                            Understand your records with quick summaries and trends.
+                        </p>
+
+                    </div>
+
+                    <div class="inline-actions">
+
+                        <button
+                            id="printReportButton"
+                            class="btn btn-secondary"
+                        >
+                            Print
+                        </button>
+
+                        <button
+                            id="exportReportButton"
+                            class="btn btn-primary"
+                        >
+                            ↓ Export CSV
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <section class="card report-filter-card">
+
+                    <div class="card-body">
+
+                        <div class="report-filter-grid">
+
+                            <div>
+
+                                <label class="form-label">
+                                    From
+                                </label>
+
+                                <input
+                                    id="reportFrom"
+                                    type="date"
+                                    class="form-input"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label class="form-label">
+                                    To
+                                </label>
+
+                                <input
+                                    id="reportTo"
+                                    type="date"
+                                    class="form-input"
+                                >
+
+                            </div>
+
+
+                            <div class="report-filter-actions">
+
+                                <button
+                                    id="reportReset"
+                                    class="btn btn-secondary"
+                                >
+                                    Reset
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <div class="data-stats-grid">
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">#</div>
+                        <div>
+                            <span>Total Records</span>
+                            <strong id="reportTotal">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">✓</div>
+                        <div>
+                            <span>Active</span>
+                            <strong id="reportActive">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">○</div>
+                        <div>
+                            <span>Inactive</span>
+                            <strong id="reportInactive">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="data-stat-card">
+                        <div class="data-stat-icon">◇</div>
+                        <div>
+                            <span>Categories</span>
+                            <strong id="reportCategories">0</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="reports-grid">
 
                     <section class="card">
 
                         <div class="card-header">
+
                             <div>
-                                <h3>All Data</h3>
-                                <p id="dataSummaryText">Manage your business records from one place.</p>
+
+                                <h3>
+                                    Records by Category
+                                </h3>
+
+                                <p>
+                                    Distribution of your data.
+                                </p>
+
                             </div>
-                            <div class="data-header-actions">
-                                <button type="button" id="exportDataButton" class="btn btn-secondary btn-sm">
-                                    ↓ Export CSV
-                                </button>
-                                <button type="button" id="importDataButton" class="btn btn-secondary btn-sm">
-                                    ↑ Import
-                                </button>
-                                <input type="file" id="importDataInput" accept=".csv,text/csv" hidden>
-                            </div>
+
                         </div>
 
                         <div class="card-body">
 
-                            <div class="toolbar data-toolbar-v2">
-                                <div class="toolbar-left data-filters">
-                                    <div class="search-box toolbar-search">
-                                        <span class="search-box-icon">⌕</span>
-                                        <input
-                                            type="search"
-                                            id="dataSearch"
-                                            class="form-input"
-                                            placeholder="Search name, category, ID..."
-                                            autocomplete="off"
-                                        >
-                                    </div>
+                            <div
+                                id="categoryChart"
+                                class="bar-chart"
+                            ></div>
 
-                                    <select id="statusFilter" class="form-select filter-select">
-                                        <option value="all">All Status</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
+                        </div>
 
-                                    <select id="categoryFilter" class="form-select filter-select">
-                                        <option value="all">All Categories</option>
-                                    </select>
+                    </section>
 
-                                    <input type="date" id="dateFromFilter" class="form-input date-filter" title="From date">
-                                    <input type="date" id="dateToFilter" class="form-input date-filter" title="To date">
 
-                                    <button type="button" id="clearDataFilters" class="btn btn-ghost btn-sm">
-                                        Clear
-                                    </button>
-                                </div>
+                    <section class="card">
 
-                                <div class="toolbar-right">
-                                    <button type="button" id="addDataButton" class="btn btn-primary">
-                                        <span>+</span> Add Data
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="card-header">
 
-                            <div id="bulkActionsBar" class="bulk-actions-bar" hidden>
-                                <div class="bulk-selection-info">
-                                    <strong id="selectedCount">0</strong> selected
-                                </div>
-                                <div class="bulk-actions">
-                                    <button type="button" id="bulkActivateButton" class="btn btn-success btn-sm">Activate</button>
-                                    <button type="button" id="bulkDeactivateButton" class="btn btn-secondary btn-sm">Deactivate</button>
-                                    <button type="button" id="bulkDeleteButton" class="btn btn-danger btn-sm">Delete</button>
-                                </div>
-                            </div>
+                            <div>
 
-                            <div class="table-wrapper">
-                                <table class="data-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="checkbox-column">
-                                                <input type="checkbox" id="selectAllData" class="table-checkbox" aria-label="Select all visible records">
-                                            </th>
-                                            <th><button type="button" class="table-sort" data-sort="id">ID <span>↕</span></button></th>
-                                            <th><button type="button" class="table-sort" data-sort="name">Name <span>↕</span></button></th>
-                                            <th><button type="button" class="table-sort" data-sort="category">Category <span>↕</span></button></th>
-                                            <th><button type="button" class="table-sort" data-sort="status">Status <span>↕</span></button></th>
-                                            <th><button type="button" class="table-sort" data-sort="createdAt">Created <span>↕</span></button></th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="dataTableBody">
-                                        <tr>
-                                            <td colspan="7" class="table-empty">Loading...</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <h3>
+                                    Records Added
+                                </h3>
+
+                                <p>
+                                    Recent daily activity.
+                                </p>
+
                             </div>
 
                         </div>
 
-                        <div class="pagination data-pagination">
-                            <div class="pagination-left">
-                                <span id="paginationInfo" class="pagination-info">0 records</span>
-                                <label class="page-size-label">
-                                    Rows
-                                    <select id="pageSizeSelect" class="form-select page-size-select">
-                                        <option value="8">8</option>
-                                        <option value="15">15</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div id="paginationControls" class="pagination-controls"></div>
+                        <div class="card-body">
+
+                            <div
+                                id="reportTimeline"
+                                class="timeline-chart"
+                            ></div>
+
                         </div>
 
                     </section>
 
                 </div>
 
-                <div id="usersPage" class="page" hidden>
-                    <div class="page-intro page-intro-actions"><div><h2>User Management</h2><p>Create, manage and control system users.</p></div><button id="addUserButton" class="btn btn-primary">+ Add User</button></div>
-                    <div class="data-stats-grid user-stats-grid">
-                        <div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Users</span><strong id="usersTotal">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="usersActive">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">A</div><div><span>Administrators</span><strong id="usersAdmins">0</strong></div></div>
-                        <div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="usersInactive">0</strong></div></div>
-                    </div>
-                    <section class="card"><div class="card-header"><div><h3>System Users</h3><p>Manage access, roles and account status.</p></div></div><div class="card-body"><div class="toolbar"><div class="toolbar-left data-filters"><div class="search-box toolbar-search"><span class="search-box-icon">⌕</span><input id="userSearch" class="form-input" placeholder="Search name or email..."></div><select id="userRoleFilter" class="form-select filter-select"><option value="all">All Roles</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="staff">Staff</option></select><select id="userStatusFilter" class="form-select filter-select"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div></div></section>
-                    <div id="userModal" class="modal" hidden><div class="modal-container modal-lg"><div class="modal-header"><h3 id="userModalTitle" class="modal-title">Add New User</h3><button id="userModalClose" class="modal-close">×</button></div><form id="userForm"><div class="modal-body"><div class="form-grid"><div class="form-group"><label class="form-label">Full Name *</label><input id="userName" class="form-input" required maxlength="100"></div><div class="form-group"><label class="form-label">Email *</label><input id="userEmail" type="email" class="form-input" required></div><div class="form-group"><label class="form-label">Role</label><select id="userRole" class="form-select"><option value="admin">Admin</option><option value="manager">Manager</option><option value="staff" selected>Staff</option></select></div><div class="form-group"><label class="form-label">Status</label><select id="userStatus" class="form-select"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="form-group form-grid-full"><label class="form-label">Password <span class="muted">(demo only)</span></label><input id="userPassword" type="password" class="form-input" minlength="6" placeholder="Required when creating a user"></div></div></div><div class="modal-footer"><button type="button" id="userModalCancel" class="btn btn-secondary">Cancel</button><button class="btn btn-primary">Save User</button></div></form></div></div>
-                </div>
 
-                <div id="reportsPage" class="page" hidden>
-                    <div class="page-intro page-intro-actions"><div><h2>Reports & Analytics</h2><p>Understand your records with quick summaries and trends.</p></div><div class="inline-actions"><button id="printReportButton" class="btn btn-secondary">Print</button><button id="exportReportButton" class="btn btn-primary">↓ Export CSV</button></div></div>
-                    <section class="card report-filter-card"><div class="card-body"><div class="report-filter-grid"><div><label class="form-label">From</label><input id="reportFrom" type="date" class="form-input"></div><div><label class="form-label">To</label><input id="reportTo" type="date" class="form-input"></div><div class="report-filter-actions"><button id="reportReset" class="btn btn-secondary">Reset</button></div></div></div></section>
-                    <div class="data-stats-grid"><div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Records</span><strong id="reportTotal">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="reportActive">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="reportInactive">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">◇</div><div><span>Categories</span><strong id="reportCategories">0</strong></div></div></div>
-                    <div class="reports-grid"><section class="card"><div class="card-header"><div><h3>Records by Category</h3><p>Distribution of your data.</p></div></div><div class="card-body"><div id="categoryChart" class="bar-chart"></div></div></section><section class="card"><div class="card-header"><div><h3>Records Added</h3><p>Recent daily activity.</p></div></div><div class="card-body"><div id="reportTimeline" class="timeline-chart"></div></div></section></div>
-                    <section class="card"><div class="card-header"><div><h3>Category Summary</h3><p>Detailed breakdown of the selected range.</p></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Category</th><th>Total</th><th>Active</th><th>Inactive</th><th>Share</th></tr></thead><tbody id="reportTableBody"></tbody></table></div></section>
-                </div>
+                <section class="card">
 
-                <div id="profilePage" class="page" hidden>
-                    <div class="page-intro"><div><h2>My Profile</h2><p>Manage your account information and security.</p></div></div>
-                    <div class="profile-layout"><section class="card profile-summary"><div class="profile-cover"></div><div class="profile-avatar-large" id="profileAvatar">A</div><div class="profile-summary-body"><h3 id="profileDisplayName">Admin</h3><p id="profileDisplayEmail">admin@example.com</p><span id="profileDisplayRole" class="badge badge-primary">Administrator</span></div></section><section class="card"><div class="card-header"><div><h3>Personal Information</h3><p>These details are displayed across the application.</p></div></div><form id="profileForm"><div class="card-body"><div class="form-grid"><div class="form-group"><label class="form-label">Full Name *</label><input id="profileName" class="form-input" required></div><div class="form-group"><label class="form-label">Email *</label><input id="profileEmail" type="email" class="form-input" required></div><div class="form-group"><label class="form-label">Phone</label><input id="profilePhone" class="form-input" placeholder="Optional"></div><div class="form-group"><label class="form-label">Position</label><input id="profilePosition" class="form-input"></div><div class="form-group form-grid-full"><label class="form-label">Bio</label><textarea id="profileBio" class="form-textarea" maxlength="300"></textarea></div></div></div><div class="modal-footer profile-footer"><button class="btn btn-primary">Save Changes</button></div></form></section><section class="card"><div class="card-header"><div><h3>Change Password</h3><p>Update your password for this account.</p></div></div><form id="changePasswordForm"><div class="card-body"><div class="form-grid"><div class="form-group form-grid-full"><label class="form-label">Current Password</label><input id="currentPassword" type="password" class="form-input" required></div><div class="form-group"><label class="form-label">New Password</label><input id="newPassword" type="password" class="form-input" minlength="6" required></div><div class="form-group"><label class="form-label">Confirm Password</label><input id="confirmPassword" type="password" class="form-input" minlength="6" required></div></div></div><div class="modal-footer profile-footer"><button class="btn btn-secondary">Update Password</button></div></form></section></div>
-                </div>
+                    <div class="card-header">
 
-                <div id="settingsPage" class="page" hidden>
-                    <div class="page-intro page-intro-actions"><div><h2>Settings</h2><p>Customize the application to match your workflow.</p></div><button id="resetSettingsButton" class="btn btn-ghost">Reset Defaults</button></div>
-                    <form id="settingsForm"><div class="settings-grid"><section class="card"><div class="card-header"><div><h3>General</h3><p>Branding and business information.</p></div></div><div class="card-body"><div class="form-group"><label class="form-label">Business Name</label><input id="settingBusinessName" class="form-input"></div><div class="form-group"><label class="form-label">Subtitle</label><input id="settingBusinessSubtitle" class="form-input"></div></div></section><section class="card"><div class="card-header"><div><h3>Appearance</h3><p>Adjust the interface to your preference.</p></div></div><div class="card-body"><div class="form-group"><label class="form-label">Rows per page</label><select id="settingItemsPerPage" class="form-select"><option value="8">8</option><option value="15">15</option><option value="25">25</option><option value="50">50</option></select></div><div class="form-group"><label class="form-label">Density</label><select id="settingDensity" class="form-select"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div><div class="form-group"><label class="form-label">Accent</label><select id="settingAccent" class="form-select"><option value="blue">Blue</option><option value="violet">Violet</option><option value="green">Green</option></select></div></div></section><section class="card"><div class="card-header"><div><h3>Notifications</h3><p>Choose which local alerts you want to see.</p></div></div><div class="card-body settings-toggles"><label class="setting-toggle"><span><strong>Notifications</strong><small>Show application notifications.</small></span><input id="settingNotifications" type="checkbox"><i></i></label><label class="setting-toggle"><span><strong>Activity alerts</strong><small>Track activity changes in the dashboard.</small></span><input id="settingActivityAlerts" type="checkbox"><i></i></label><label class="setting-toggle"><span><strong>Confirm deletion</strong><small>Ask before destructive actions.</small></span><input id="settingConfirmDelete" type="checkbox"><i></i></label></div></section></div><div class="settings-save"><button class="btn btn-primary btn-lg">Save Settings</button></div></form>
-                </div>
+                        <div>
 
-            </section>
+                            <h3>
+                                Category Summary
+                            </h3>
 
+                            <p>
+                                Detailed breakdown of the selected range.
+                            </p>
 
-            <!-- =========================
-                 DATA MODAL
-            ========================== -->
-
-            <div id="dataModal" class="modal" hidden>
-                <div class="modal-container modal-lg">
-                    <div class="modal-header">
-                        <h3 id="dataModalTitle" class="modal-title">Add New Data</h3>
-                        <button type="button" id="dataModalClose" class="modal-close" aria-label="Close">×</button>
-                    </div>
-
-                    <form id="dataForm">
-                        <div class="modal-body">
-                            <input type="hidden" id="dataId">
-
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label class="form-label" for="dataName">Name <span class="required">*</span></label>
-                                    <input type="text" id="dataName" class="form-input" placeholder="Enter name" maxlength="100" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="dataCategory">Category <span class="required">*</span></label>
-                                    <input type="text" id="dataCategory" class="form-input" placeholder="Enter category" maxlength="60" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="dataStatus">Status</label>
-                                    <select id="dataStatus" class="form-select">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group form-grid-full">
-                                    <label class="form-label" for="dataDescription">Description</label>
-                                    <textarea id="dataDescription" class="form-textarea" placeholder="Optional description" maxlength="500"></textarea>
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="button" id="dataModalCancel" class="btn btn-secondary">Cancel</button>
-                            <button type="submit" id="dataSaveButton" class="btn btn-primary">Save Data</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table class="data-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Total</th>
+                                    <th>Active</th>
+                                    <th>Inactive</th>
+                                    <th>Share</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="reportTableBody"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
             </div>
 
-            <!-- =========================
-                 TOASTS
-            ========================== -->
 
-            <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+            <!-- =================================================
+                 PROFILE
+            ================================================== -->
 
+            <div id="profilePage" class="page" hidden>
 
-            <!-- =========================
-                 FOOTER
-            ========================== -->
+                <div class="page-intro">
 
-            <footer class="footer">
+                    <div>
 
-                <span>
-                    © 2026 Business Management System
-                </span>
+                        <h2>
+                            My Profile
+                        </h2>
 
-                <span>
-                    Version 1.1.0
-                </span>
+                        <p>
+                            Manage your account information and security.
+                        </p>
 
-            </footer>
+                    </div>
 
-        </main>
-
-    </div>
+                </div>
 
 
-    <!-- =========================
-         MOBILE OVERLAY
-    ========================== -->
+                <div class="profile-layout">
 
-    <div
-        id="sidebarOverlay"
-        class="sidebar-overlay"
-        hidden
-    ></div>
+                    <section class="card profile-summary">
+
+                        <div class="profile-cover"></div>
+
+                        <div
+                            class="profile-avatar-large"
+                            id="profileAvatar"
+                        >
+                            A
+                        </div>
+
+                        <div class="profile-summary-body">
+
+                            <h3 id="profileDisplayName">
+                                Admin
+                            </h3>
+
+                            <p id="profileDisplayEmail">
+                                admin@example.com
+                            </p>
+
+                            <span
+                                id="profileDisplayRole"
+                                class="badge badge-primary"
+                            >
+                                Administrator
+                            </span>
+
+                        </div>
+
+                    </section>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+                    <section class="card">
 
-    <script type="module" src="./assets/js/app.js"></script>
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Personal Information
+                                </h3>
+
+                                <p>
+                                    These details are displayed across the application.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <form id="profileForm">
+
+                            <div class="card-body">
+
+                                <div class="form-grid">
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Full Name *
+                                        </label>
+
+                                        <input
+                                            id="profileName"
+                                            class="form-input"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Email *
+                                        </label>
+
+                                        <input
+                                            id="profileEmail"
+                                            type="email"
+                                            class="form-input"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Phone
+                                        </label>
+
+                                        <input
+                                            id="profilePhone"
+                                            class="form-input"
+                                            placeholder="Optional"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Position
+                                        </label>
+
+                                        <input
+                                            id="profilePosition"
+                                            class="form-input"
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group form-grid-full">
+
+                                        <label class="form-label">
+                                            Bio
+                                        </label>
+
+                                        <textarea
+                                            id="profileBio"
+                                            class="form-textarea"
+                                            maxlength="300"
+                                        ></textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer profile-footer">
+
+                                <button
+                                    class="btn btn-primary"
+                                >
+                                    Save Changes
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <section class="card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Change Password
+                                </h3>
+
+                                <p>
+                                    Update your password for this account.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <form id="changePasswordForm">
+
+                            <div class="card-body">
+
+                                <div class="form-grid">
+
+                                    <div class="form-group form-grid-full">
+
+                                        <label class="form-label">
+                                            Current Password
+                                        </label>
+
+                                        <input
+                                            id="currentPassword"
+                                            type="password"
+                                            class="form-input"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            New Password
+                                        </label>
+
+                                        <input
+                                            id="newPassword"
+                                            type="password"
+                                            class="form-input"
+                                            minlength="6"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <label class="form-label">
+                                            Confirm Password
+                                        </label>
+
+                                        <input
+                                            id="confirmPassword"
+                                            type="password"
+                                            class="form-input"
+                                            minlength="6"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="modal-footer profile-footer">
+
+                                <button
+                                    class="btn btn-secondary"
+                                >
+                                    Update Password
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SETTINGS
+            ================================================== -->
+
+            <div id="settingsPage" class="page" hidden>
+
+                <div class="page-intro page-intro-actions">
+
+                    <div>
+
+                        <h2>
+                            Settings
+                        </h2>
+
+                        <p>
+                            Customize the application to match your workflow.
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="resetSettingsButton"
+                        class="btn btn-ghost"
+                    >
+                        Reset Defaults
+                    </button>
+
+                </div>
+
+
+                <form id="settingsForm">
+
+                    <div class="settings-grid">
+
+                        <section class="card">
+
+                            <div class="card-header">
+
+                                <div>
+
+                                    <h3>
+                                        General
+                                    </h3>
+
+                                    <p>
+                                        Branding and business information.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Business Name
+                                    </label>
+
+                                    <input
+                                        id="settingBusinessName"
+                                        class="form-input"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Subtitle
+                                    </label>
+
+                                    <input
+                                        id="settingBusinessSubtitle"
+                                        class="form-input"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <section class="card">
+
+                            <div class="card-header">
+
+                                <div>
+
+                                    <h3>
+                                        Appearance
+                                    </h3>
+
+                                    <p>
+                                        Adjust the interface to your preference.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Rows per page
+                                    </label>
+
+                                    <select
+                                        id="settingItemsPerPage"
+                                        class="form-select"
+                                    >
+
+                                        <option value="8">8</option>
+                                        <option value="15">15</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Density
+                                    </label>
+
+                                    <select
+                                        id="settingDensity"
+                                        class="form-select"
+                                    >
+
+                                        <option value="comfortable">
+                                            Comfortable
+                                        </option>
+
+                                        <option value="compact">
+                                            Compact
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label class="form-label">
+                                        Accent
+                                    </label>
+
+                                    <select
+                                        id="settingAccent"
+                                        class="form-select"
+                                    >
+
+                                        <option value="blue">
+                                            Blue
+                                        </option>
+
+                                        <option value="violet">
+                                            Violet
+                                        </option>
+
+                                        <option value="green">
+                                            Green
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <section class="card">
+
+                            <div class="card-header">
+
+                                <div>
+
+                                    <h3>
+                                        Notifications
+                                    </h3>
+
+                                    <p>
+                                        Choose which local alerts you want to see.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body settings-toggles">
+
+                                <label class="setting-toggle">
+
+                                    <span>
+
+                                        <strong>
+                                            Notifications
+                                        </strong>
+
+                                        <small>
+                                            Show application notifications.
+                                        </small>
+
+                                    </span>
+
+                                    <input
+                                        id="settingNotifications"
+                                        type="checkbox"
+                                    >
+
+                                    <i></i>
+
+                                </label>
+
+
+                                <label class="setting-toggle">
+
+                                    <span>
+
+                                        <strong>
+                                            Activity alerts
+                                        </strong>
+
+                                        <small>
+                                            Track activity changes in the dashboard.
+                                        </small>
+
+                                    </span>
+
+                                    <input
+                                        id="settingActivityAlerts"
+                                        type="checkbox"
+                                    >
+
+                                    <i></i>
+
+                                </label>
+
+
+                                <label class="setting-toggle">
+
+                                    <span>
+
+                                        <strong>
+                                            Confirm deletion
+                                        </strong>
+
+                                        <small>
+                                            Ask before destructive actions.
+                                        </small>
+
+                                    </span>
+
+                                    <input
+                                        id="settingConfirmDelete"
+                                        type="checkbox"
+                                    >
+
+                                    <i></i>
+
+                                </label>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <div class="settings-save">
+
+                        <button
+                            class="btn btn-primary btn-lg"
+                        >
+                            Save Settings
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ADD / EDIT / VIEW DATA MODAL
+        ====================================================== -->
+
+        <div
+            id="dataModal"
+            class="modal"
+            hidden
+        >
+
+            <div class="modal-container modal-lg data-modal-container">
+
+                <!-- MODAL HEADER -->
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <h3
+                            id="dataModalTitle"
+                            class="modal-title"
+                        >
+                            Add New Data
+                        </h3>
+
+                        <p class="modal-subtitle">
+                            Create a new record for your system.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="dataModalClose"
+                        class="modal-close"
+                        aria-label="Close"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <form id="dataForm">
+
+                    <!-- SCROLLABLE BODY -->
+
+                    <div class="modal-body data-modal-body">
+
+                        <input
+                            type="hidden"
+                            id="dataId"
+                        >
+
+
+                        <!-- BASIC INFORMATION -->
+
+                        <div class="modal-section">
+
+                            <div class="modal-section-title">
+                                Basic Information
+                            </div>
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="dataName"
+                                    >
+                                        Name
+                                        <span class="required">
+                                            *
+                                        </span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="dataName"
+                                        class="form-input"
+                                        placeholder="Enter name"
+                                        maxlength="100"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="dataCategory"
+                                    >
+                                        Category
+                                        <span class="required">
+                                            *
+                                        </span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="dataCategory"
+                                        class="form-input"
+                                        placeholder="Enter category"
+                                        maxlength="60"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label
+                                        class="form-label"
+                                        for="dataStatus"
+                                    >
+                                        Status
+                                    </label>
+
+                                    <select
+                                        id="dataStatus"
+                                        class="form-select"
+                                    >
+
+                                        <option value="active">
+                                            Active
+                                        </option>
+
+                                        <option value="inactive">
+                                            Inactive
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group form-grid-full">
+
+                                    <label
+                                        class="form-label"
+                                        for="dataDescription"
+                                    >
+                                        Description
+                                    </label>
+
+                                    <textarea
+                                        id="dataDescription"
+                                        class="form-textarea"
+                                        placeholder="Optional description"
+                                        maxlength="500"
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             IMAGE UPLOAD
+                        ================================================== -->
+
+                        <div class="modal-section image-upload-section">
+
+                            <div class="modal-section-heading">
+
+                                <div>
+
+                                    <div class="modal-section-title">
+                                        Images
+                                    </div>
+
+                                    <p class="modal-section-description">
+                                        Add one or multiple images to this record.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- FILE INPUT -->
+
+                            <label
+                                for="dataImages"
+                                id="imageUploadArea"
+                                class="image-upload-area"
+                            >
+
+                                <input
+                                    type="file"
+                                    id="dataImages"
+                                    accept="image/*"
+                                    multiple
+                                    hidden
+                                >
+
+
+                                <div class="image-upload-icon">
+                                    ↑
+                                </div>
+
+
+                                <div class="image-upload-content">
+
+                                    <strong>
+                                        Click to upload images
+                                    </strong>
+
+                                    <span>
+                                        You can select multiple images at once
+                                    </span>
+
+                                    <small>
+                                        JPG, PNG, WEBP, GIF
+                                    </small>
+
+                                </div>
+
+                            </label>
+
+
+                            <!-- IMAGE PREVIEW -->
+
+                            <div
+                                id="imagePreviewContainer"
+                                class="image-preview-container"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FIXED FOOTER -->
+
+                    <div class="modal-footer data-modal-footer">
+
+                        <button
+                            type="button"
+                            id="dataModalCancel"
+                            class="btn btn-secondary"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="submit"
+                            id="dataSaveButton"
+                            class="btn btn-primary"
+                        >
+                            Save Data
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOAST -->
+
+        <div
+            id="toastContainer"
+            class="toast-container"
+            aria-live="polite"
+        ></div>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 Business Management System
+            </span>
+
+            <span>
+                Version 1.1.0
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+    hidden
+></div>
+
+
+<!-- JAVASCRIPT -->
+
+<script
+    type="module"
+    src="./assets/js/app.js"
+></script>
 
 </body>
 </html>

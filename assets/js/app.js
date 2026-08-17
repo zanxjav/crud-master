@@ -167,6 +167,7 @@ function handleRoute() {
 }
 
 
+
 // =========================================================
 // 6. OPEN SIDEBAR
 // =========================================================
@@ -274,9 +275,7 @@ quickActions.forEach((button) => {
 
     button.addEventListener("click", () => {
 
-        const action =
-            button.dataset.action;
-
+        const action = button.dataset.action;
 
         if (action === "users") {
 
@@ -298,11 +297,18 @@ quickActions.forEach((button) => {
 
         else if (action === "add") {
 
+            // Pindah ke halaman Data terlebih dahulu
             window.location.hash = "data";
 
-            window.dispatchEvent(
-                new CustomEvent("crud:open-add")
-            );
+            // Tunggu sampai halaman Data aktif,
+            // lalu buka modal Add Data
+            setTimeout(() => {
+
+                window.dispatchEvent(
+                    new CustomEvent("crud:open-add")
+                );
+
+            }, 50);
 
         }
 
