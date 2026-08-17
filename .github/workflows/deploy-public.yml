@@ -33,21 +33,32 @@ jobs:
       - name: Prepare website
         run: |
           rm -rf _site
+          mkdir -p _site
           mkdir -p _site/admin
+          mkdir -p _site/public
 
           # ==========================================
-          # PUBLIC WEBSITE
+          # MAIN APPLICATION: ADMIN DASHBOARD (ROOT)
+          # Serves the exact same Admin UI as local Live Server
           # ==========================================
-          cp -r public/. _site/
+          cp index.html _site/
+          cp -r assets _site/
+          cp -r components _site/
+          cp -r pages _site/
 
           # ==========================================
-          # ADMIN PANEL
+          # ADMIN ALIAS (/admin)
+          # Ensures /admin and /admin/ load seamlessly
           # ==========================================
           cp index.html _site/admin/
-
           cp -r assets _site/admin/
           cp -r components _site/admin/
           cp -r pages _site/admin/
+
+          # ==========================================
+          # PUBLIC LANDING PAGE (/public)
+          # ==========================================
+          cp -r public/. _site/public/
 
           # ==========================================
           # DEBUG - SHOW DEPLOYMENT STRUCTURE

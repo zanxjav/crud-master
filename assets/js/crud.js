@@ -30,79 +30,148 @@ const $ = (id) => document.getElementById(id);
 // STORAGE
 // =========================================================
 
-function readData() {
-
-    try {
-
-        const raw =
-            localStorage.getItem(STORAGE_KEY);
-
-        const data =
-            raw ? JSON.parse(raw) : [];
-
-        return Array.isArray(data)
-            ? data
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Failed to read CRUD data:",
-            error
-        );
-
-        return [];
-
-    }
-
+function getSampleSeedData() {
+    const now = Date.now();
+    const day = 86400000;
+    return [
+        {
+            id: "DATA-001",
+            name: "MacBook Pro 16 M3 Max",
+            category: "Electronics",
+            status: "active",
+            description: "High-performance workstation laptop for enterprise development.",
+            images: [],
+            createdAt: new Date(now - day * 4).toISOString(),
+            updatedAt: new Date(now - day * 4).toISOString()
+        },
+        {
+            id: "DATA-002",
+            name: "Logitech MX Master 3S",
+            category: "Accessories",
+            status: "active",
+            description: "Ergonomic wireless precision mouse with 8K DPI sensor.",
+            images: [],
+            createdAt: new Date(now - day * 3).toISOString(),
+            updatedAt: new Date(now - day * 3).toISOString()
+        },
+        {
+            id: "DATA-003",
+            name: "Dell UltraSharp 27 4K",
+            category: "Electronics",
+            status: "active",
+            description: "IPS Black 4K UHD color-accurate professional monitor.",
+            images: [],
+            createdAt: new Date(now - day * 2).toISOString(),
+            updatedAt: new Date(now - day * 2).toISOString()
+        },
+        {
+            id: "DATA-004",
+            name: "Ergonomic Mesh Chair",
+            category: "Furniture",
+            status: "active",
+            description: "Premium breathable mesh chair with adaptive lumbar support.",
+            images: [],
+            createdAt: new Date(now - day * 1).toISOString(),
+            updatedAt: new Date(now - day * 1).toISOString()
+        },
+        {
+            id: "DATA-005",
+            name: "Cloud Hosting Enterprise",
+            category: "Services",
+            status: "active",
+            description: "High availability Kubernetes cluster & managed database infrastructure.",
+            images: [],
+            createdAt: new Date(now - 3600000 * 5).toISOString(),
+            updatedAt: new Date(now - 3600000 * 5).toISOString()
+        },
+        {
+            id: "DATA-006",
+            name: "Standing Desk Dual Motor",
+            category: "Furniture",
+            status: "inactive",
+            description: "Electric height adjustable standing desk with 4 memory presets.",
+            images: [],
+            createdAt: new Date(now - 3600000 * 2).toISOString(),
+            updatedAt: new Date(now - 3600000 * 2).toISOString()
+        }
+    ];
 }
 
+function getSampleSeedActivities() {
+    const now = Date.now();
+    return [
+        {
+            id: "ACT-INIT-01",
+            type: "create",
+            message: "System initialized with sample business records",
+            recordId: "DATA-005",
+            createdAt: new Date(now - 3600000 * 5).toISOString()
+        },
+        {
+            id: "ACT-INIT-02",
+            type: "update",
+            message: "Updated category for Dell UltraSharp 27 4K",
+            recordId: "DATA-003",
+            createdAt: new Date(now - 3600000 * 3).toISOString()
+        },
+        {
+            id: "ACT-INIT-03",
+            type: "create",
+            message: "Added Standing Desk Dual Motor",
+            recordId: "DATA-006",
+            createdAt: new Date(now - 3600000 * 2).toISOString()
+        }
+    ];
+}
+
+function readData() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+            const data = JSON.parse(raw);
+            if (Array.isArray(data) && data.length > 0) {
+                return data;
+            }
+        }
+        const initial = getSampleSeedData();
+        writeData(initial);
+        return initial;
+    } catch (error) {
+        console.error("Failed to read CRUD data:", error);
+        return getSampleSeedData();
+    }
+}
 
 function writeData(data) {
-
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(data)
     );
-
 }
-
 
 function readActivities() {
-
     try {
-
-        const raw =
-            localStorage.getItem(ACTIVITY_KEY);
-
-        const data =
-            raw ? JSON.parse(raw) : [];
-
-        return Array.isArray(data)
-            ? data
-            : [];
-
+        const raw = localStorage.getItem(ACTIVITY_KEY);
+        if (raw) {
+            const data = JSON.parse(raw);
+            if (Array.isArray(data) && data.length > 0) {
+                return data;
+            }
+        }
+        const initial = getSampleSeedActivities();
+        writeActivities(initial);
+        return initial;
     } catch (error) {
-
-        console.error(
-            "Failed to read activities:",
-            error
-        );
-
-        return [];
-
+        console.error("Failed to read activities:", error);
+        return getSampleSeedActivities();
     }
-
 }
 
-
 function writeActivities(activities) {
-
     localStorage.setItem(
         ACTIVITY_KEY,
         JSON.stringify(activities)
     );
-
 }
 
 

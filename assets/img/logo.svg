@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2563eb" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#primaryGrad)" filter="url(#glow)" />
+  <path d="M14 16C14 14.8954 14.8954 14 16 14H32C33.1046 14 34 14.8954 34 16V20C34 21.1046 33.1046 22 32 22H16C14.8954 22 14 21.1046 14 20V16Z" fill="#ffffff" fill-opacity="0.95" />
+  <path d="M14 26C14 24.8954 14.8954 24 16 24H26C27.1046 24 28 24.8954 28 26V30C28 31.1046 27.1046 32 26 32H16C14.8954 32 14 31.1046 14 30V26Z" fill="#ffffff" fill-opacity="0.8" />
+  <circle cx="32" cy="28" r="3" fill="#67e8f9" />
+</svg>

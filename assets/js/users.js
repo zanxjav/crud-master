@@ -12,7 +12,14 @@ function getUsers(){
 }
 function saveUsers(users){ localStorage.setItem(USERS_KEY, JSON.stringify(users)); window.dispatchEvent(new CustomEvent("users:data-changed")); }
 function seedUsers(){
-    const users = [{id:"USR-ADMIN",name:"Admin",email:"admin@example.com",role:"admin",status:"active",createdAt:new Date().toISOString()}];
+    const now = Date.now();
+    const day = 86400000;
+    const users = [
+        {id:"USR-ADMIN", name:"Admin Utama", email:"admin@example.com", role:"admin", status:"active", createdAt:new Date(now - day * 10).toISOString()},
+        {id:"USR-002", name:"Sarah Jenkins", email:"sarah.j@example.com", role:"manager", status:"active", createdAt:new Date(now - day * 6).toISOString()},
+        {id:"USR-003", name:"Budi Santoso", email:"budi.s@example.com", role:"staff", status:"active", createdAt:new Date(now - day * 3).toISOString()},
+        {id:"USR-004", name:"Citra Dewi", email:"citra.d@example.com", role:"staff", status:"inactive", createdAt:new Date(now - day * 1).toISOString()}
+    ];
     localStorage.setItem(USERS_KEY, JSON.stringify(users)); return users;
 }
 function toast(type,title,message){

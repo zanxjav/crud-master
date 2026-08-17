@@ -1515,22 +1515,15 @@ img {
 
 .modal {
     position: fixed;
-
     inset: 0;
-
     z-index: 5000;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    padding: 24px;
-
-    background: rgba(15, 23, 42, 0.58);
-
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.62);
+    backdrop-filter: blur(4px);
     overflow-y: auto;
-
     -webkit-overflow-scrolling: touch;
 }
 
@@ -1538,41 +1531,36 @@ img {
     display: none !important;
 }
 
-
-/*
-   Container dibuat SOLID.
-   Tidak transparan.
-*/
-
 .modal-container {
     position: relative;
-
     width: 100%;
-
-    max-width: 560px;
-
-    max-height: calc(100vh - 48px);
-
+    max-width: 580px;
+    max-height: min(88vh, 720px);
     display: flex;
     flex-direction: column;
-
     margin: auto;
-
     background: #ffffff;
-
     border: 1px solid rgba(229, 231, 235, 0.95);
-
     border-radius: 14px;
-
     box-shadow: var(--shadow-lg);
-
     overflow: hidden;
-
     animation: modalIn 0.18s ease-out;
 }
 
-.modal-lg {
+.modal-lg,
+.data-modal-container {
     max-width: 680px;
+}
+
+.modal-container form,
+.modal form {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+    margin: 0;
 }
 
 @keyframes modalIn {
@@ -1580,41 +1568,28 @@ img {
         opacity: 0;
         transform: translateY(8px) scale(0.99);
     }
-
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
 }
 
-
-/*
-   Header modal tidak ikut scroll.
-*/
-
 .modal-header {
     flex: 0 0 auto;
-
-    min-height: 64px;
-
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
-
     padding: 15px 20px;
-
     background: #ffffff;
-
     border-bottom: 1px solid var(--border);
+    z-index: 5;
 }
 
 .modal-title {
     margin: 0;
-
     color: var(--text);
-
     font-size: 15px;
     font-weight: 700;
 }
@@ -1622,23 +1597,15 @@ img {
 .modal-close {
     width: 34px;
     height: 34px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     flex: 0 0 auto;
-
     border-radius: 8px;
-
     background: transparent;
-
     color: var(--text-muted);
-
     font-size: 21px;
-
     cursor: pointer;
-
     transition: var(--transition);
 }
 
@@ -1647,51 +1614,33 @@ img {
     color: var(--danger);
 }
 
-
-/*
-   BODY MODAL YANG SCROLL.
-   Ini bagian penting agar Save Data
-   tidak terpotong.
-*/
-
-.modal-body {
+.modal-body,
+.data-modal-body {
     flex: 1 1 auto;
-
     min-height: 0;
-
     padding: 20px;
-
     background: #ffffff;
-
-    overflow-y: auto;
+    overflow-y: auto !important;
     overflow-x: hidden;
-
     -webkit-overflow-scrolling: touch;
-
     overscroll-behavior: contain;
 }
 
-
-/*
-   Footer selalu terlihat.
-*/
-
-.modal-footer {
+.modal-footer,
+.data-modal-footer {
     flex: 0 0 auto;
-
-    min-height: 64px;
-
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
-    gap: 9px;
-
-    padding: 13px 20px;
-
+    gap: 10px;
+    padding: 14px 20px;
     background: #ffffff;
-
     border-top: 1px solid var(--border);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    box-shadow: 0 -4px 12px rgba(15, 23, 42, 0.04);
 }
 
 .modal-footer .btn {
