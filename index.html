@@ -632,8 +632,15 @@
                     <div class="page-intro">
                         <div>
                             <h2>Data Management</h2>
-                            <p>Create, manage, search, and organize your records.</p>
+                            <p>Create, manage, search, filter, and organize your records.</p>
                         </div>
+                    </div>
+
+                    <div class="data-stats-grid">
+                        <div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Records</span><strong id="dataStatTotal">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="dataStatActive">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="dataStatInactive">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">+</div><div><span>Added Today</span><strong id="dataStatToday">0</strong></div></div>
                     </div>
 
                     <section class="card">
@@ -641,30 +648,50 @@
                         <div class="card-header">
                             <div>
                                 <h3>All Data</h3>
-                                <p>Manage your business records from one place.</p>
+                                <p id="dataSummaryText">Manage your business records from one place.</p>
+                            </div>
+                            <div class="data-header-actions">
+                                <button type="button" id="exportDataButton" class="btn btn-secondary btn-sm">
+                                    ↓ Export CSV
+                                </button>
+                                <button type="button" id="importDataButton" class="btn btn-secondary btn-sm">
+                                    ↑ Import
+                                </button>
+                                <input type="file" id="importDataInput" accept=".csv,text/csv" hidden>
                             </div>
                         </div>
 
                         <div class="card-body">
 
-                            <div class="toolbar">
-                                <div class="toolbar-left">
+                            <div class="toolbar data-toolbar-v2">
+                                <div class="toolbar-left data-filters">
                                     <div class="search-box toolbar-search">
                                         <span class="search-box-icon">⌕</span>
                                         <input
                                             type="search"
                                             id="dataSearch"
                                             class="form-input"
-                                            placeholder="Search data..."
+                                            placeholder="Search name, category, ID..."
                                             autocomplete="off"
                                         >
                                     </div>
 
-                                    <select id="statusFilter" class="form-select">
+                                    <select id="statusFilter" class="form-select filter-select">
                                         <option value="all">All Status</option>
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option>
                                     </select>
+
+                                    <select id="categoryFilter" class="form-select filter-select">
+                                        <option value="all">All Categories</option>
+                                    </select>
+
+                                    <input type="date" id="dateFromFilter" class="form-input date-filter" title="From date">
+                                    <input type="date" id="dateToFilter" class="form-input date-filter" title="To date">
+
+                                    <button type="button" id="clearDataFilters" class="btn btn-ghost btn-sm">
+                                        Clear
+                                    </button>
                                 </div>
 
                                 <div class="toolbar-right">
@@ -674,21 +701,35 @@
                                 </div>
                             </div>
 
+                            <div id="bulkActionsBar" class="bulk-actions-bar" hidden>
+                                <div class="bulk-selection-info">
+                                    <strong id="selectedCount">0</strong> selected
+                                </div>
+                                <div class="bulk-actions">
+                                    <button type="button" id="bulkActivateButton" class="btn btn-success btn-sm">Activate</button>
+                                    <button type="button" id="bulkDeactivateButton" class="btn btn-secondary btn-sm">Deactivate</button>
+                                    <button type="button" id="bulkDeleteButton" class="btn btn-danger btn-sm">Delete</button>
+                                </div>
+                            </div>
+
                             <div class="table-wrapper">
                                 <table class="data-table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Status</th>
-                                            <th>Created</th>
+                                            <th class="checkbox-column">
+                                                <input type="checkbox" id="selectAllData" class="table-checkbox" aria-label="Select all visible records">
+                                            </th>
+                                            <th><button type="button" class="table-sort" data-sort="id">ID <span>↕</span></button></th>
+                                            <th><button type="button" class="table-sort" data-sort="name">Name <span>↕</span></button></th>
+                                            <th><button type="button" class="table-sort" data-sort="category">Category <span>↕</span></button></th>
+                                            <th><button type="button" class="table-sort" data-sort="status">Status <span>↕</span></button></th>
+                                            <th><button type="button" class="table-sort" data-sort="createdAt">Created <span>↕</span></button></th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="dataTableBody">
                                         <tr>
-                                            <td colspan="6" class="table-empty">Loading...</td>
+                                            <td colspan="7" class="table-empty">Loading...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -696,15 +737,25 @@
 
                         </div>
 
-                        <div class="pagination">
-                            <span id="paginationInfo" class="pagination-info">0 records</span>
+                        <div class="pagination data-pagination">
+                            <div class="pagination-left">
+                                <span id="paginationInfo" class="pagination-info">0 records</span>
+                                <label class="page-size-label">
+                                    Rows
+                                    <select id="pageSizeSelect" class="form-select page-size-select">
+                                        <option value="8">8</option>
+                                        <option value="15">15</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </label>
+                            </div>
                             <div id="paginationControls" class="pagination-controls"></div>
                         </div>
 
                     </section>
 
                 </div>
-
 
                 <div
                     id="usersPage"
@@ -815,7 +866,7 @@
                 </span>
 
                 <span>
-                    Version 1.0.0
+                    Version 1.1.0
                 </span>
 
             </footer>
