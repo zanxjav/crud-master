@@ -30,11 +30,32 @@ const $ = (id) => document.getElementById(id);
 // STORAGE
 // =========================================================
 
+const SAMPLE_DUMMY_IDS = new Set([
+    "DATA-001", "DATA-002", "DATA-003", 
+    "DATA-004", "DATA-005", "DATA-006"
+]);
+
 function readData() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
-        const data = raw ? JSON.parse(raw) : [];
-        return Array.isArray(data) ? data : [];
+        let data = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(data)) return [];
+        
+        // Bersihkan data dummy/sample secara otomatis jika sempat tersimpan
+        const cleaned = data.filter(item => 
+            !SAMPLE_DUMMY_IDS.has(item.id) &&
+            item.id !== "DATA-001" &&
+            item.id !== "DATA-002" &&
+            item.id !== "DATA-003" &&
+            item.id !== "DATA-004" &&
+            item.id !== "DATA-005" &&
+            item.id !== "DATA-006"
+        );
+        
+        if (cleaned.length !== data.length) {
+            writeData(cleaned);
+        }
+        return cleaned;
     } catch (error) {
         console.error("Failed to read CRUD data:", error);
         return [];
@@ -51,8 +72,19 @@ function writeData(data) {
 function readActivities() {
     try {
         const raw = localStorage.getItem(ACTIVITY_KEY);
-        const data = raw ? JSON.parse(raw) : [];
-        return Array.isArray(data) ? data : [];
+        let data = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(data)) return [];
+        
+        // Bersihkan riwayat dummy otomatis
+        const cleaned = data.filter(item => 
+            !String(item.id).startsWith("ACT-INIT") &&
+            !SAMPLE_DUMMY_IDS.has(item.recordId)
+        );
+        
+        if (cleaned.length !== data.length) {
+            writeActivities(cleaned);
+        }
+        return cleaned;
     } catch (error) {
         console.error("Failed to read activities:", error);
         return [];

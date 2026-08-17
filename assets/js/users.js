@@ -7,8 +7,19 @@ const $ = id => document.getElementById(id);
 const esc = v => String(v ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#039;"}[c]));
 
 function getUsers(){
-    try { const v = JSON.parse(localStorage.getItem(USERS_KEY)); return Array.isArray(v) ? v : seedUsers(); }
-    catch { return seedUsers(); }
+    try {
+        const v = JSON.parse(localStorage.getItem(USERS_KEY));
+        if (Array.isArray(v)) {
+            const cleaned = v.filter(u => u.id === "USR-ADMIN" || (!String(u.id).startsWith("USR-00")));
+            if (cleaned.length !== v.length) {
+                saveUsers(cleaned);
+            }
+            return cleaned.length ? cleaned : seedUsers();
+        }
+        return seedUsers();
+    } catch {
+        return seedUsers();
+    }
 }
 function saveUsers(users){ localStorage.setItem(USERS_KEY, JSON.stringify(users)); window.dispatchEvent(new CustomEvent("users:data-changed")); }
 function seedUsers(){
