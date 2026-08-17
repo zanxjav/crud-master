@@ -1,6 +1,5 @@
 // =========================================================
 // CRUD MASTER - DATA CRUD ENGINE V3
-// CRUD + IMAGE UPLOAD + MULTIPLE IMAGE PREVIEW
 // =========================================================
 
 const STORAGE_KEY = "crud_master_data";
@@ -19,9 +18,6 @@ let selectedIds = new Set();
 let pageSize =
     Number(localStorage.getItem(PAGE_SIZE_KEY)) || 8;
 
-// Temporary images selected in modal
-let selectedImages = [];
-
 
 // =========================================================
 // DOM HELPER
@@ -38,11 +34,11 @@ function readData() {
 
     try {
 
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw =
+            localStorage.getItem(STORAGE_KEY);
 
-        const data = raw
-            ? JSON.parse(raw)
-            : [];
+        const data =
+            raw ? JSON.parse(raw) : [];
 
         return Array.isArray(data)
             ? data
@@ -176,25 +172,13 @@ function escapeHtml(value = "") {
 
     return String(value)
 
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
+        .replaceAll("&", "&amp;")
 
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
+        .replaceAll("<", "&lt;")
 
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
+        .replaceAll(">", "&gt;")
 
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
+        .replaceAll('"', "&quot;")
 
         .replaceAll(
             "'",
@@ -279,20 +263,20 @@ function getDateOnly(value) {
         return "";
     }
 
-    const y =
+    const year =
         date.getFullYear();
 
-    const m =
+    const month =
         String(
             date.getMonth() + 1
         ).padStart(2, "0");
 
-    const d =
+    const day =
         String(
             date.getDate()
         ).padStart(2, "0");
 
-    return `${y}-${m}-${d}`;
+    return `${year}-${month}-${day}`;
 
 }
 
@@ -356,17 +340,13 @@ function showToast(
     `;
 
     toast
-        .querySelector(
-            ".toast-close"
-        )
-        .addEventListener(
+        .querySelector(".toast-close")
+        ?.addEventListener(
             "click",
             () => toast.remove()
         );
 
-    container.appendChild(
-        toast
-    );
+    container.appendChild(toast);
 
     window.setTimeout(
         () => toast.remove(),
@@ -377,125 +357,77 @@ function showToast(
 
 
 // =========================================================
-// IMAGE HELPERS
+// IMAGE VALIDATION
 // =========================================================
 
-function normalizeImages(record) {
+const MAX_IMAGE_SIZE =
+    5 * 1024 * 1024;
+
+
+function validateImage(file) {
+
+    if (!file) {
+        return {
+            valid: true
+        };
+    }
 
     if (
-        Array.isArray(record?.images)
+        !file.type.startsWith("image/")
     ) {
 
-        return record.images
-            .filter(
-                image =>
-                    typeof image === "string" &&
-                    image.length > 0
-            );
+        return {
+            valid: false,
+            message:
+                "File harus berupa gambar."
+        };
 
     }
 
-    // Compatibility with old
-    // single-image records
-
     if (
-        typeof record?.image === "string" &&
-        record.image.length > 0
+        file.size > MAX_IMAGE_SIZE
     ) {
 
-        return [record.image];
+        return {
+            valid: false,
+            message:
+                "Ukuran gambar maksimal 5 MB."
+        };
 
     }
 
-    return [];
+    return {
+        valid: true
+    };
 
 }
 
 
-function readImageFiles(files) {
+// =========================================================
+// IMAGE TO DATA URL
+// =========================================================
+
+function fileToDataURL(file) {
 
     return new Promise(
         (resolve, reject) => {
 
-            const fileArray =
-                Array.from(files || []);
+            const reader =
+                new FileReader();
 
-            if (!fileArray.length) {
+            reader.onload = () =>
+                resolve(
+                    reader.result
+                );
 
-                resolve([]);
+            reader.onerror = () =>
+                reject(
+                    new Error(
+                        "Gagal membaca gambar."
+                    )
+                );
 
-                return;
-
-            }
-
-            const results = [];
-
-            let completed = 0;
-
-            fileArray.forEach(
-                (file, index) => {
-
-                    if (
-                        !file.type.startsWith(
-                            "image/"
-                        )
-                    ) {
-
-                        completed++;
-
-                        if (
-                            completed ===
-                            fileArray.length
-                        ) {
-
-                            resolve(results);
-
-                        }
-
-                        return;
-
-                    }
-
-                    const reader =
-                        new FileReader();
-
-                    reader.onload =
-                        () => {
-
-                            results[index] =
-                                reader.result;
-
-                            completed++;
-
-                            if (
-                                completed ===
-                                fileArray.length
-                            ) {
-
-                                resolve(
-                                    results.filter(Boolean)
-                                );
-
-                            }
-
-                        };
-
-                    reader.onerror =
-                        () => {
-
-                            reject(
-                                new Error(
-                                    `Failed to read ${file.name}`
-                                )
-                            );
-
-                        };
-
-                    reader.readAsDataURL(
-                        file
-                    );
-
-                });
+            reader.readAsDataURL(file);
 
         }
     );
@@ -503,149 +435,83 @@ function readImageFiles(files) {
 }
 
 
-function renderImagePreview() {
+// =========================================================
+// IMAGE PREVIEW
+// =========================================================
 
-    const container =
-        $("imagePreview");
+function resetImagePreview() {
 
-    if (!container) return;
+    const preview =
+        $("dataImagePreview");
 
-    if (!selectedImages.length) {
+    const previewImage =
+        $("dataImagePreviewImg");
 
-        container.innerHTML = `
+    const removeButton =
+        $("removeDataImage");
 
-            <div class="image-preview-empty">
+    const imageInput =
+        $("dataImage");
 
-                <span>🖼️</span>
-
-                <p>
-                    No images selected
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
+    if (preview) {
+        preview.hidden = true;
     }
 
-    container.innerHTML =
-        selectedImages
-            .map(
-                (image, index) => `
+    if (previewImage) {
+        previewImage.src = "";
+    }
 
-                    <div
-                        class="image-preview-item"
-                        data-image-index="${index}"
-                    >
+    if (removeButton) {
+        removeButton.hidden = true;
+    }
 
-                        <img
-                            src="${image}"
-                            alt="Preview ${index + 1}"
-                        >
-
-                        <button
-                            type="button"
-                            class="image-preview-remove"
-                            data-remove-image="${index}"
-                            title="Remove image"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-                `
-            )
-            .join("");
+    if (imageInput) {
+        imageInput.value = "";
+    }
 
 }
 
 
-function clearSelectedImages() {
-
-    selectedImages = [];
-
-    const input =
-        $("dataImages");
-
-    if (input) {
-
-        input.value = "";
-
-    }
-
-    renderImagePreview();
-
-}
-
-
-async function handleImageSelection(
-    files
+function showImagePreview(
+    src,
+    removable = true
 ) {
 
-    const fileArray =
-        Array.from(files || []);
+    const preview =
+        $("dataImagePreview");
 
-    if (!fileArray.length) return;
+    const previewImage =
+        $("dataImagePreviewImg");
 
-    const imageFiles =
-        fileArray.filter(
-            file =>
-                file.type.startsWith(
-                    "image/"
-                )
-        );
+    const removeButton =
+        $("removeDataImage");
 
-    if (!imageFiles.length) {
+    if (!preview || !previewImage) {
+        return;
+    }
 
-        showToast(
-            "error",
-            "Invalid image",
-            "Please select image files only."
-        );
+    if (!src) {
+
+        resetImagePreview();
 
         return;
 
     }
 
-    try {
+    previewImage.src = src;
 
-        const newImages =
-            await readImageFiles(
-                imageFiles
-            );
+    preview.hidden = false;
 
-        selectedImages.push(
-            ...newImages
-        );
-
-        renderImagePreview();
-
-        showToast(
-            "success",
-            "Images selected",
-            `${newImages.length} image${newImages.length === 1 ? "" : "s"} added.`
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        showToast(
-            "error",
-            "Image error",
-            "Failed to load one or more images."
-        );
-
+    if (removeButton) {
+        removeButton.hidden =
+            !removable;
     }
 
 }
 
 
 // =========================================================
-// DATA STATS
+// UPDATE DATA STATS
 // =========================================================
 
 function updateDataStats() {
@@ -679,35 +545,27 @@ function updateDataStats() {
         ).length;
 
     if ($("dataStatTotal")) {
-
         $("dataStatTotal")
             .textContent =
             data.length;
-
     }
 
     if ($("dataStatActive")) {
-
         $("dataStatActive")
             .textContent =
             active;
-
     }
 
     if ($("dataStatInactive")) {
-
         $("dataStatInactive")
             .textContent =
             inactive;
-
     }
 
     if ($("dataStatToday")) {
-
         $("dataStatToday")
             .textContent =
             todayCount;
-
     }
 
 }
@@ -729,40 +587,41 @@ function populateCategoryFilter(
     const current =
         select.value;
 
-    const categories =
-        [
-            ...new Set(
-                data
-                    .map(
-                        record =>
-                            String(
-                                record.category ||
-                                ""
-                            ).trim()
-                    )
-                    .filter(Boolean)
-            )
-        ]
-        .sort(
-            (a, b) =>
-                a.localeCompare(b)
-        );
+    const categories = [
+        ...new Set(
+            data
+                .map(
+                    record =>
+                        String(
+                            record.category || ""
+                        ).trim()
+                )
+                .filter(Boolean)
+        )
+    ].sort(
+        (a, b) =>
+            a.localeCompare(b)
+    );
 
-    select.innerHTML =
+    select.innerHTML = `
 
-        `<option value="all">
+        <option value="all">
             All Categories
-        </option>` +
+        </option>
 
-        categories
-            .map(
-                category => `
-                    <option value="${escapeHtml(category)}">
-                        ${escapeHtml(category)}
-                    </option>
-                `
-            )
-            .join("");
+        ${
+            categories
+                .map(
+                    category => `
+                        <option value="${escapeHtml(category)}">
+                            ${escapeHtml(category)}
+                        </option>
+                    `
+                )
+                .join("")
+        }
+
+    `;
 
     select.value =
         categories.includes(current)
@@ -779,32 +638,29 @@ function populateCategoryFilter(
 function getFilteredData() {
 
     const search =
-        (
-            $("dataSearch")
-                ?.value || ""
-        )
+        ($("dataSearch")?.value || "")
             .trim()
             .toLowerCase();
 
     const status =
-        $("statusFilter")
-            ?.value || "all";
+        $("statusFilter")?.value ||
+        "all";
 
     const category =
-        $("categoryFilter")
-            ?.value || "all";
+        $("categoryFilter")?.value ||
+        "all";
 
     const from =
-        $("dateFromFilter")
-            ?.value || "";
+        $("dateFromFilter")?.value ||
+        "";
 
     const to =
-        $("dateToFilter")
-            ?.value || "";
+        $("dateToFilter")?.value ||
+        "";
 
     const filtered =
         readData().filter(
-            record => {
+            (record) => {
 
                 if (
                     status !== "all" &&
@@ -815,9 +671,7 @@ function getFilteredData() {
 
                 if (
                     category !== "all" &&
-                    String(
-                        record.category || ""
-                    ) !== category
+                    record.category !== category
                 ) {
                     return false;
                 }
@@ -842,17 +696,19 @@ function getFilteredData() {
                 }
 
                 if (!search) {
-
                     return true;
-
                 }
 
                 return [
 
                     record.id,
+
                     record.name,
+
                     record.category,
+
                     record.status,
+
                     record.description
 
                 ].some(
@@ -860,8 +716,8 @@ function getFilteredData() {
                         String(
                             value || ""
                         )
-                            .toLowerCase()
-                            .includes(search)
+                        .toLowerCase()
+                        .includes(search)
                 );
 
             }
@@ -903,10 +759,12 @@ function compareRecords(
     ) {
 
         left =
-            new Date(left).getTime() || 0;
+            new Date(left).getTime() ||
+            0;
 
         right =
-            new Date(right).getTime() || 0;
+            new Date(right).getTime() ||
+            0;
 
     } else {
 
@@ -922,13 +780,33 @@ function compareRecords(
 
     let result = 0;
 
-    if (left < right) result = -1;
+    if (left < right) {
+        result = -1;
+    }
 
-    if (left > right) result = 1;
+    if (left > right) {
+        result = 1;
+    }
 
     return direction === "asc"
         ? result
         : -result;
+
+}
+
+
+// =========================================================
+// CAPITALIZE
+// =========================================================
+
+function capitalize(
+    value = ""
+) {
+
+    return value
+        .charAt(0)
+        .toUpperCase() +
+        value.slice(1);
 
 }
 
@@ -981,16 +859,12 @@ function renderTable() {
         currentPage >
         totalPages
     ) {
-
         currentPage =
             totalPages;
-
     }
 
     const start =
-        (
-            currentPage - 1
-        ) *
+        (currentPage - 1) *
         pageSize;
 
     const visible =
@@ -1007,8 +881,10 @@ function renderTable() {
             )
         );
 
+
+    // Remove deleted IDs
     selectedIds.forEach(
-        id => {
+        (id) => {
 
             if (
                 !allData.some(
@@ -1016,18 +892,12 @@ function renderTable() {
                         record.id === id
                 )
             ) {
-
                 selectedIds.delete(id);
-
             }
 
         }
     );
 
-
-    // -------------------------------------------------------
-    // EMPTY
-    // -------------------------------------------------------
 
     if (!visible.length) {
 
@@ -1044,9 +914,7 @@ function renderTable() {
                         class="empty-table-state"
                     >
 
-                        <div
-                            class="empty-icon"
-                        >
+                        <div class="empty-icon">
                             ○
                         </div>
 
@@ -1072,154 +940,159 @@ function renderTable() {
         body.innerHTML =
             visible
                 .map(
-                    record => {
+                    record => `
 
-                        const images =
-                            normalizeImages(
-                                record
-                            );
+                        <tr>
 
-                        return `
+                            <td
+                                class="checkbox-column"
+                            >
 
-                            <tr>
-
-                                <td
-                                    class="checkbox-column"
+                                <input
+                                    type="checkbox"
+                                    class="table-checkbox row-checkbox"
+                                    data-id="${escapeHtml(record.id)}"
+                                    ${
+                                        selectedIds.has(
+                                            record.id
+                                        )
+                                            ? "checked"
+                                            : ""
+                                    }
+                                    aria-label="Select ${escapeHtml(record.name)}"
                                 >
 
-                                    <input
-                                        type="checkbox"
-                                        class="table-checkbox row-checkbox"
-                                        data-id="${escapeHtml(record.id)}"
-                                        ${
-                                            selectedIds.has(
-                                                record.id
-                                            )
-                                                ? "checked"
-                                                : ""
-                                        }
-                                    >
+                            </td>
 
-                                </td>
 
-                                <td>
+                            <td>
 
-                                    <span
-                                        class="record-id"
-                                    >
-                                        ${escapeHtml(record.id)}
-                                    </span>
+                                <span
+                                    class="record-id"
+                                >
+                                    ${escapeHtml(record.id)}
+                                </span>
 
-                                </td>
+                            </td>
 
-                                <td>
 
-                                    <div
-                                        class="record-name-cell"
-                                    >
+                            <td>
 
-                                        ${
-                                            images.length
-                                                ? `
-                                                    <img
-                                                        src="${images[0]}"
-                                                        class="record-thumbnail"
-                                                        alt=""
-                                                    >
-                                                `
-                                                : ""
-                                        }
+                                <div class="record-name-cell">
 
-                                        <strong>
-                                            ${escapeHtml(record.name)}
-                                        </strong>
+                                    ${
+                                        record.image
+                                            ? `
+                                                <img
+                                                    src="${escapeHtml(record.image)}"
+                                                    class="record-thumbnail"
+                                                    alt=""
+                                                >
+                                            `
+                                            : `
+                                                <div class="record-thumbnail-placeholder">
+                                                    ${escapeHtml(
+                                                        String(
+                                                            record.name || "?"
+                                                        )
+                                                        .charAt(0)
+                                                        .toUpperCase()
+                                                    )}
+                                                </div>
+                                            `
+                                    }
 
-                                    </div>
+                                    <strong>
+                                        ${escapeHtml(record.name)}
+                                    </strong>
 
-                                </td>
+                                </div>
 
-                                <td>
-                                    ${escapeHtml(record.category)}
-                                </td>
+                            </td>
 
-                                <td>
+
+                            <td>
+                                ${escapeHtml(record.category)}
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="status-badge ${
+                                        record.status === "active"
+                                            ? "status-active"
+                                            : "status-inactive"
+                                    }"
+                                    data-action="toggle-status"
+                                    data-id="${escapeHtml(record.id)}"
+                                    title="Toggle status"
+                                >
+
+                                    <span></span>
+
+                                    ${escapeHtml(
+                                        capitalize(
+                                            record.status
+                                        )
+                                    )}
+
+                                </button>
+
+                            </td>
+
+
+                            <td>
+                                ${formatDate(
+                                    record.createdAt
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-actions"
+                                >
 
                                     <button
                                         type="button"
-                                        class="status-badge ${
-                                            record.status ===
-                                            "active"
-                                                ? "status-active"
-                                                : "status-inactive"
-                                        }"
-                                        data-action="toggle-status"
+                                        class="table-action view"
+                                        data-action="view"
                                         data-id="${escapeHtml(record.id)}"
-                                        title="Toggle status"
+                                        title="View"
                                     >
-
-                                        <span></span>
-
-                                        ${escapeHtml(
-                                            capitalize(
-                                                record.status
-                                            )
-                                        )}
-
+                                        ○
                                     </button>
 
-                                </td>
-
-                                <td>
-                                    ${formatDate(
-                                        record.createdAt
-                                    )}
-                                </td>
-
-                                <td>
-
-                                    <div
-                                        class="table-actions"
+                                    <button
+                                        type="button"
+                                        class="table-action edit"
+                                        data-action="edit"
+                                        data-id="${escapeHtml(record.id)}"
+                                        title="Edit"
                                     >
+                                        ✎
+                                    </button>
 
-                                        <button
-                                            type="button"
-                                            class="table-action view"
-                                            data-action="view"
-                                            data-id="${escapeHtml(record.id)}"
-                                            title="View"
-                                        >
-                                            ○
-                                        </button>
+                                    <button
+                                        type="button"
+                                        class="table-action delete"
+                                        data-action="delete"
+                                        data-id="${escapeHtml(record.id)}"
+                                        title="Delete"
+                                    >
+                                        ×
+                                    </button>
 
-                                        <button
-                                            type="button"
-                                            class="table-action edit"
-                                            data-action="edit"
-                                            data-id="${escapeHtml(record.id)}"
-                                            title="Edit"
-                                        >
-                                            ✎
-                                        </button>
+                                </div>
 
-                                        <button
-                                            type="button"
-                                            class="table-action delete"
-                                            data-action="delete"
-                                            data-id="${escapeHtml(record.id)}"
-                                            title="Delete"
-                                        >
-                                            ×
-                                        </button>
+                            </td>
 
-                                    </div>
+                        </tr>
 
-                                </td>
-
-                            </tr>
-
-                        `;
-
-                    }
+                    `
                 )
                 .join("");
 
@@ -1240,15 +1113,21 @@ function renderTable() {
     info.textContent =
         `${first}–${last} of ${data.length} records`;
 
+
     const summary =
         $("dataSummaryText");
 
     if (summary) {
 
         summary.textContent =
-            `${data.length} matching record${data.length === 1 ? "" : "s"} • ${allData.length} total`;
+            `${data.length} matching record${
+                data.length === 1
+                    ? ""
+                    : "s"
+            } • ${allData.length} total`;
 
     }
+
 
     updateSelectAllState(
         visibleIds
@@ -1298,43 +1177,53 @@ function renderPagination(
             type="button"
             class="pagination-button"
             data-page="${currentPage - 1}"
-            ${currentPage === 1 ? "disabled" : ""}
+            ${
+                currentPage === 1
+                    ? "disabled"
+                    : ""
+            }
         >
             ‹
         </button>
 
-        ${pages
-            .map(
-                page =>
-                    page === "…"
-                        ? `
-                            <span
-                                class="pagination-ellipsis"
-                            >
-                                …
-                            </span>
-                        `
-                        : `
-                            <button
-                                type="button"
-                                class="pagination-button ${
-                                    page === currentPage
-                                        ? "active"
-                                        : ""
-                                }"
-                                data-page="${page}"
-                            >
-                                ${page}
-                            </button>
-                        `
-            )
-            .join("")}
+        ${
+            pages
+                .map(
+                    page =>
+                        page === "…"
+                            ? `
+                                <span
+                                    class="pagination-ellipsis"
+                                >
+                                    …
+                                </span>
+                            `
+                            : `
+                                <button
+                                    type="button"
+                                    class="pagination-button ${
+                                        page === currentPage
+                                            ? "active"
+                                            : ""
+                                    }"
+                                    data-page="${page}"
+                                >
+                                    ${page}
+                                </button>
+                            `
+                )
+                .join("")
+        }
 
         <button
             type="button"
             class="pagination-button"
             data-page="${currentPage + 1}"
-            ${currentPage === totalPages ? "disabled" : ""}
+            ${
+                currentPage === totalPages
+                    ? "disabled"
+                    : ""
+            }
         >
             ›
         </button>
@@ -1412,7 +1301,7 @@ function updateSortIndicators() {
             ".table-sort"
         )
         .forEach(
-            button => {
+            (button) => {
 
                 const span =
                     button.querySelector(
@@ -1490,7 +1379,9 @@ function updateBulkBar() {
     const count =
         $("selectedCount");
 
-    if (!bar || !count) return;
+    if (!bar || !count) {
+        return;
+    }
 
     count.textContent =
         selectedIds.size;
@@ -1501,24 +1392,685 @@ function updateBulkBar() {
 }
 
 
-function getVisibleData() {
+// =========================================================
+// MODAL
+// =========================================================
 
-    const data =
-        getFilteredData();
+function openModal(
+    mode = "add",
+    id = null
+) {
 
-    const start =
-        (
-            currentPage - 1
-        ) *
-        pageSize;
+    const modal =
+        $("dataModal");
 
-    return data.slice(
-        start,
-        start + pageSize
+    const form =
+        $("dataForm");
+
+    if (!modal || !form) {
+        return;
+    }
+
+
+    const title =
+        $("dataModalTitle");
+
+    const saveButton =
+        $("dataSaveButton");
+
+    const fields = [
+
+        "dataName",
+
+        "dataCategory",
+
+        "dataStatus",
+
+        "dataDescription",
+
+        "dataImage"
+
+    ];
+
+
+    form.reset();
+
+    editingId = null;
+
+
+    // Reset fields
+    fields.forEach(
+        (fieldId) => {
+
+            const field =
+                $(fieldId);
+
+            if (field) {
+                field.disabled = false;
+            }
+
+        }
     );
+
+
+    // Reset image
+    resetImagePreview();
+
+
+    if (saveButton) {
+        saveButton.hidden =
+            mode === "view";
+    }
+
+
+    const cancelButton =
+        $("dataModalCancel");
+
+    if (cancelButton) {
+
+        cancelButton.textContent =
+            mode === "view"
+                ? "Close"
+                : "Cancel";
+
+    }
+
+
+    // =====================================================
+    // ADD
+    // =====================================================
+
+    if (mode === "add") {
+
+        title.textContent =
+            "Add New Data";
+
+        $("dataStatus").value =
+            "active";
+
+    }
+
+
+    // =====================================================
+    // EDIT / VIEW
+    // =====================================================
+
+    else {
+
+        const record =
+            readData().find(
+                item =>
+                    item.id === id
+            );
+
+        if (!record) {
+            return;
+        }
+
+        editingId =
+            record.id;
+
+        title.textContent =
+            mode === "edit"
+                ? "Edit Data"
+                : "View Data";
+
+        $("dataId").value =
+            record.id;
+
+        $("dataName").value =
+            record.name || "";
+
+        $("dataCategory").value =
+            record.category || "";
+
+        $("dataStatus").value =
+            record.status || "active";
+
+        $("dataDescription").value =
+            record.description || "";
+
+
+        if (record.image) {
+
+            showImagePreview(
+                record.image,
+                mode !== "view"
+            );
+
+        }
+
+
+        if (mode === "view") {
+
+            fields.forEach(
+                (fieldId) => {
+
+                    const field =
+                        $(fieldId);
+
+                    if (field) {
+                        field.disabled =
+                            true;
+                    }
+
+                }
+            );
+
+        }
+
+    }
+
+
+    // =====================================================
+    // OPEN
+    // =====================================================
+
+    modal.hidden = false;
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    // Focus
+    if (
+        mode !== "view" &&
+        $("dataName")
+    ) {
+
+        window.setTimeout(
+            () =>
+                $("dataName").focus(),
+            100
+        );
+
+    }
 
 }
 
+
+// =========================================================
+// CLOSE MODAL
+// =========================================================
+
+function closeModal() {
+
+    const modal =
+        $("dataModal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.hidden = true;
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+    editingId = null;
+
+    resetImagePreview();
+
+}
+
+
+// =========================================================
+// HANDLE IMAGE
+// =========================================================
+
+async function handleImageChange(
+    event
+) {
+
+    const file =
+        event.target.files?.[0];
+
+    if (!file) {
+        return;
+    }
+
+    const validation =
+        validateImage(file);
+
+    if (!validation.valid) {
+
+        showToast(
+            "error",
+            "Invalid image",
+            validation.message
+        );
+
+        event.target.value = "";
+
+        resetImagePreview();
+
+        return;
+
+    }
+
+
+    try {
+
+        const image =
+            await fileToDataURL(file);
+
+        showImagePreview(
+            image,
+            true
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        showToast(
+            "error",
+            "Image error",
+            "Gagal memproses gambar."
+        );
+
+        event.target.value = "";
+
+    }
+
+}
+
+
+// =========================================================
+// REMOVE IMAGE
+// =========================================================
+
+function removeImage() {
+
+    resetImagePreview();
+
+}
+
+
+// =========================================================
+// SUBMIT
+// =========================================================
+
+async function handleSubmit(
+    event
+) {
+
+    event.preventDefault();
+
+
+    const name =
+        $("dataName")
+            ?.value
+            .trim() || "";
+
+    const category =
+        $("dataCategory")
+            ?.value
+            .trim() || "";
+
+    const status =
+        $("dataStatus")
+            ?.value || "active";
+
+    const description =
+        $("dataDescription")
+            ?.value
+            .trim() || "";
+
+
+    if (name.length < 2) {
+
+        showToast(
+            "error",
+            "Validation error",
+            "Name must contain at least 2 characters."
+        );
+
+        return;
+
+    }
+
+
+    if (!category) {
+
+        showToast(
+            "error",
+            "Validation error",
+            "Category is required."
+        );
+
+        return;
+
+    }
+
+
+    const data =
+        readData();
+
+    const now =
+        new Date().toISOString();
+
+
+    // =====================================================
+    // IMAGE
+    // =====================================================
+
+    let image = "";
+
+
+    const imageInput =
+        $("dataImage");
+
+
+    if (
+        imageInput &&
+        imageInput.files &&
+        imageInput.files[0]
+    ) {
+
+        const file =
+            imageInput.files[0];
+
+        const validation =
+            validateImage(file);
+
+        if (!validation.valid) {
+
+            showToast(
+                "error",
+                "Invalid image",
+                validation.message
+            );
+
+            return;
+
+        }
+
+        try {
+
+            image =
+                await fileToDataURL(file);
+
+        } catch (error) {
+
+            showToast(
+                "error",
+                "Image error",
+                "Gagal membaca gambar."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    // =====================================================
+    // EDIT
+    // =====================================================
+
+    if (editingId) {
+
+        const index =
+            data.findIndex(
+                record =>
+                    record.id === editingId
+            );
+
+        if (index === -1) {
+            return;
+        }
+
+
+        const oldRecord =
+            data[index];
+
+
+        data[index] = {
+
+            ...oldRecord,
+
+            name,
+
+            category,
+
+            status,
+
+            description,
+
+            image:
+                image ||
+                oldRecord.image ||
+                "",
+
+            updatedAt:
+                now
+
+        };
+
+
+        writeData(data);
+
+
+        writeActivity(
+            "update",
+            `Updated ${name}`,
+            data[index]
+        );
+
+
+        showToast(
+            "success",
+            "Data updated",
+            `${name} was updated successfully.`
+        );
+
+    }
+
+
+    // =====================================================
+    // ADD
+    // =====================================================
+
+    else {
+
+        const record = {
+
+            id:
+                createId(),
+
+            name,
+
+            category,
+
+            status,
+
+            description,
+
+            image,
+
+            createdAt:
+                now,
+
+            updatedAt:
+                now
+
+        };
+
+
+        data.unshift(
+            record
+        );
+
+
+        writeData(data);
+
+
+        writeActivity(
+            "create",
+            `Added ${name}`,
+            record
+        );
+
+
+        showToast(
+            "success",
+            "Data added",
+            `${name} was added successfully.`
+        );
+
+    }
+
+
+    closeModal();
+
+
+    currentPage = 1;
+
+
+    renderTable();
+
+
+    notifyDataChanged();
+
+}
+
+
+// =========================================================
+// DELETE
+// =========================================================
+
+function deleteRecord(
+    id
+) {
+
+    const data =
+        readData();
+
+    const record =
+        data.find(
+            item =>
+                item.id === id
+        );
+
+    if (!record) {
+        return;
+    }
+
+
+    if (
+        !window.confirm(
+            `Delete "${record.name}"? This action cannot be undone.`
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    writeData(
+        data.filter(
+            item =>
+                item.id !== id
+        )
+    );
+
+
+    selectedIds.delete(
+        id
+    );
+
+
+    writeActivity(
+        "delete",
+        `Deleted ${record.name}`,
+        record
+    );
+
+
+    showToast(
+        "success",
+        "Data deleted",
+        `${record.name} was removed.`
+    );
+
+
+    renderTable();
+
+
+    notifyDataChanged();
+
+}
+
+
+// =========================================================
+// TOGGLE STATUS
+// =========================================================
+
+function toggleStatus(
+    id
+) {
+
+    const data =
+        readData();
+
+    const index =
+        data.findIndex(
+            item =>
+                item.id === id
+        );
+
+    if (index === -1) {
+        return;
+    }
+
+
+    const record =
+        data[index];
+
+
+    record.status =
+        record.status === "active"
+            ? "inactive"
+            : "active";
+
+
+    record.updatedAt =
+        new Date().toISOString();
+
+
+    writeData(data);
+
+
+    writeActivity(
+        "update",
+        `${capitalize(record.status)} ${record.name}`,
+        record
+    );
+
+
+    showToast(
+        "success",
+        "Status updated",
+        `${record.name} is now ${capitalize(record.status)}.`
+    );
+
+
+    renderTable();
+
+
+    notifyDataChanged();
+
+}
+
+
+// =========================================================
+// SELECT VISIBLE
+// =========================================================
 
 function selectVisibleRows(
     checked
@@ -1552,531 +2104,19 @@ function selectVisibleRows(
 }
 
 
-// =========================================================
-// OPEN DATA MODAL
-// =========================================================
-
-function openModal(
-    mode = "add",
-    id = null
-) {
-
-    const modal =
-        $("dataModal");
-
-    const form =
-        $("dataForm");
-
-    if (!modal || !form) return;
-
-    const title =
-        $("dataModalTitle");
-
-    const saveButton =
-        $("dataSaveButton");
-
-    const fields = [
-
-        "dataName",
-        "dataCategory",
-        "dataStatus",
-        "dataDescription"
-
-    ];
-
-
-    // Reset
-
-    form.reset();
-
-    editingId = null;
-
-    clearSelectedImages();
-
-
-    fields.forEach(
-        fieldId => {
-
-            const field =
-                $(fieldId);
-
-            if (field) {
-
-                field.disabled =
-                    false;
-
-            }
-
-        }
-    );
-
-
-    if (saveButton) {
-
-        saveButton.hidden =
-            mode === "view";
-
-    }
-
-
-    const cancelButton =
-        $("dataModalCancel");
-
-    if (cancelButton) {
-
-        cancelButton.textContent =
-            mode === "view"
-                ? "Close"
-                : "Cancel";
-
-    }
-
-
-    // -------------------------------------------------------
-    // ADD
-    // -------------------------------------------------------
-
-    if (mode === "add") {
-
-        title.textContent =
-            "Add New Data";
-
-        $("dataStatus").value =
-            "active";
-
-    }
-
-
-    // -------------------------------------------------------
-    // EDIT / VIEW
-    // -------------------------------------------------------
-
-    else {
-
-        const record =
-            readData().find(
-                item =>
-                    item.id === id
-            );
-
-        if (!record) return;
-
-        editingId =
-            record.id;
-
-        title.textContent =
-            mode === "edit"
-                ? "Edit Data"
-                : "View Data";
-
-        $("dataId").value =
-            record.id;
-
-        $("dataName").value =
-            record.name || "";
-
-        $("dataCategory").value =
-            record.category || "";
-
-        $("dataStatus").value =
-            record.status || "active";
-
-        $("dataDescription").value =
-            record.description || "";
-
-        selectedImages =
-            normalizeImages(
-                record
-            );
-
-        renderImagePreview();
-
-
-        if (mode === "view") {
-
-            fields.forEach(
-                fieldId => {
-
-                    const field =
-                        $(fieldId);
-
-                    if (field) {
-
-                        field.disabled =
-                            true;
-
-                    }
-
-                }
-            );
-
-            const imageInput =
-                $("dataImages");
-
-            if (imageInput) {
-
-                imageInput.disabled =
-                    true;
-
-            }
-
-        }
-
-    }
-
-
-    // -------------------------------------------------------
-    // OPEN
-    // -------------------------------------------------------
-
-    modal.hidden =
-        false;
-
-    document.body.style.overflow =
-        "hidden";
-
-
-    // Focus
-
-    if (
-        mode !== "view" &&
-        $("dataName")
-    ) {
-
-        setTimeout(
-            () =>
-                $("dataName").focus(),
-            100
-        );
-
-    }
-
-}
-
-
-// =========================================================
-// CLOSE MODAL
-// =========================================================
-
-function closeModal() {
-
-    const modal =
-        $("dataModal");
-
-    if (!modal) return;
-
-    modal.hidden =
-        true;
-
-    document.body.style.overflow =
-        "";
-
-    editingId =
-        null;
-
-    clearSelectedImages();
-
-}
-
-
-// =========================================================
-// SUBMIT
-// =========================================================
-
-function handleSubmit(
-    event
-) {
-
-    event.preventDefault();
-
-    const name =
-        $("dataName")
-            .value
-            .trim();
-
-    const category =
-        $("dataCategory")
-            .value
-            .trim();
-
-    const status =
-        $("dataStatus")
-            .value;
-
-    const description =
-        $("dataDescription")
-            .value
-            .trim();
-
-
-    if (
-        name.length < 2
-    ) {
-
-        showToast(
-            "error",
-            "Validation error",
-            "Name must contain at least 2 characters."
-        );
-
-        return;
-
-    }
-
-
-    if (!category) {
-
-        showToast(
-            "error",
-            "Validation error",
-            "Category is required."
-        );
-
-        return;
-
-    }
-
+function getVisibleData() {
 
     const data =
-        readData();
+        getFilteredData();
 
-    const now =
-        new Date().toISOString();
+    const start =
+        (currentPage - 1) *
+        pageSize;
 
-
-    // -------------------------------------------------------
-    // EDIT
-    // -------------------------------------------------------
-
-    if (editingId) {
-
-        const index =
-            data.findIndex(
-                record =>
-                    record.id ===
-                    editingId
-            );
-
-        if (index === -1) return;
-
-        const oldRecord =
-            data[index];
-
-        data[index] = {
-
-            ...oldRecord,
-
-            name,
-
-            category,
-
-            status,
-
-            description,
-
-            images:
-                [...selectedImages],
-
-            // Keep compatibility
-            image:
-                selectedImages[0] || "",
-
-            updatedAt:
-                now
-
-        };
-
-        writeData(data);
-
-        writeActivity(
-            "update",
-            `Updated ${name}`,
-            data[index]
-        );
-
-        showToast(
-            "success",
-            "Data updated",
-            `${name} was updated successfully.`
-        );
-
-    }
-
-
-    // -------------------------------------------------------
-    // CREATE
-    // -------------------------------------------------------
-
-    else {
-
-        const record = {
-
-            id:
-                createId(),
-
-            name,
-
-            category,
-
-            status,
-
-            description,
-
-            images:
-                [...selectedImages],
-
-            image:
-                selectedImages[0] || "",
-
-            createdAt:
-                now,
-
-            updatedAt:
-                now
-
-        };
-
-        data.unshift(
-            record
-        );
-
-        writeData(
-            data
-        );
-
-        writeActivity(
-            "create",
-            `Added ${name}`,
-            record
-        );
-
-        showToast(
-            "success",
-            "Data added",
-            `${name} was added successfully.`
-        );
-
-    }
-
-
-    closeModal();
-
-    currentPage =
-        1;
-
-    renderTable();
-
-    notifyDataChanged();
-
-}
-
-
-// =========================================================
-// DELETE
-// =========================================================
-
-function deleteRecord(
-    id
-) {
-
-    const data =
-        readData();
-
-    const record =
-        data.find(
-            item =>
-                item.id === id
-        );
-
-    if (!record) return;
-
-    if (
-        !window.confirm(
-            `Delete "${record.name}"? This action cannot be undone.`
-        )
-    ) {
-        return;
-    }
-
-    writeData(
-        data.filter(
-            item =>
-                item.id !== id
-        )
+    return data.slice(
+        start,
+        start + pageSize
     );
-
-    selectedIds.delete(
-        id
-    );
-
-    writeActivity(
-        "delete",
-        `Deleted ${record.name}`,
-        record
-    );
-
-    showToast(
-        "success",
-        "Data deleted",
-        `${record.name} was removed.`
-    );
-
-    renderTable();
-
-    notifyDataChanged();
-
-}
-
-
-// =========================================================
-// TOGGLE STATUS
-// =========================================================
-
-function toggleStatus(
-    id
-) {
-
-    const data =
-        readData();
-
-    const index =
-        data.findIndex(
-            item =>
-                item.id === id
-        );
-
-    if (index === -1) return;
-
-    const record =
-        data[index];
-
-    record.status =
-        record.status === "active"
-            ? "inactive"
-            : "active";
-
-    record.updatedAt =
-        new Date().toISOString();
-
-    writeData(
-        data
-    );
-
-    writeActivity(
-        "update",
-        `${capitalize(record.status)} ${record.name}`,
-        record
-    );
-
-    showToast(
-        "success",
-        "Status updated",
-        `${record.name} is now ${capitalize(record.status)}.`
-    );
-
-    renderTable();
-
-    notifyDataChanged();
 
 }
 
@@ -2089,13 +2129,16 @@ function bulkUpdateStatus(
     status
 ) {
 
-    if (!selectedIds.size)
+    if (!selectedIds.size) {
         return;
+    }
+
 
     const data =
         readData();
 
     let changed = 0;
+
 
     data.forEach(
         record => {
@@ -2113,31 +2156,43 @@ function bulkUpdateStatus(
                 record.updatedAt =
                     new Date().toISOString();
 
-                changed++;
+                changed += 1;
 
             }
 
         }
     );
 
-    writeData(
-        data
-    );
+
+    writeData(data);
+
 
     writeActivity(
         "update",
-        `${capitalize(status)} ${changed} selected record${changed === 1 ? "" : "s"}`
+        `${capitalize(status)} ${changed} selected record${
+            changed === 1
+                ? ""
+                : "s"
+        }`
     );
 
+
     selectedIds.clear();
+
 
     showToast(
         "success",
         "Bulk update complete",
-        `${changed} record${changed === 1 ? "" : "s"} updated.`
+        `${changed} record${
+            changed === 1
+                ? ""
+                : "s"
+        } updated.`
     );
 
+
     renderTable();
+
 
     notifyDataChanged();
 
@@ -2150,30 +2205,40 @@ function bulkUpdateStatus(
 
 function bulkDelete() {
 
-    if (!selectedIds.size)
-        return;
-
-    const ids =
-        new Set(
-            selectedIds
-        );
-
-    if (
-        !window.confirm(
-            `Delete ${ids.size} selected record${ids.size === 1 ? "" : "s"}? This action cannot be undone.`
-        )
-    ) {
+    if (!selectedIds.size) {
         return;
     }
 
+
+    const ids =
+        new Set(selectedIds);
+
+
+    if (
+        !window.confirm(
+            `Delete ${ids.size} selected record${
+                ids.size === 1
+                    ? ""
+                    : "s"
+            }? This action cannot be undone.`
+        )
+    ) {
+
+        return;
+
+    }
+
+
     const data =
         readData();
+
 
     const removed =
         data.filter(
             record =>
                 ids.has(record.id)
         );
+
 
     writeData(
         data.filter(
@@ -2182,20 +2247,33 @@ function bulkDelete() {
         )
     );
 
+
     writeActivity(
         "delete",
-        `Deleted ${removed.length} selected record${removed.length === 1 ? "" : "s"}`
+        `Deleted ${removed.length} selected record${
+            removed.length === 1
+                ? ""
+                : "s"
+        }`
     );
 
+
     selectedIds.clear();
+
 
     showToast(
         "success",
         "Records deleted",
-        `${removed.length} record${removed.length === 1 ? "" : "s"} removed.`
+        `${removed.length} record${
+            removed.length === 1
+                ? ""
+                : "s"
+        } removed.`
     );
 
+
     renderTable();
+
 
     notifyDataChanged();
 
@@ -2203,7 +2281,7 @@ function bulkDelete() {
 
 
 // =========================================================
-// CSV EXPORT
+// EXPORT CSV
 // =========================================================
 
 function exportCsv() {
@@ -2223,18 +2301,27 @@ function exportCsv() {
 
     }
 
+
     const headers = [
 
         "ID",
+
         "Name",
+
         "Category",
+
         "Status",
+
         "Description",
-        "Image Count",
+
+        "Image",
+
         "Created At",
+
         "Updated At"
 
     ];
+
 
     const rows =
         data.map(
@@ -2250,8 +2337,7 @@ function exportCsv() {
 
                 record.description || "",
 
-                normalizeImages(record)
-                    .length,
+                record.image || "",
 
                 record.createdAt,
 
@@ -2260,25 +2346,28 @@ function exportCsv() {
             ]
         );
 
+
     const csv =
         [
             headers,
             ...rows
         ]
-            .map(
-                row =>
-                    row
-                        .map(
-                            csvEscape
-                        )
-                        .join(",")
-            )
-            .join("\r\n");
+
+        .map(
+            row =>
+                row
+                    .map(csvEscape)
+                    .join(",")
+        )
+
+        .join("\r\n");
+
 
     const blob =
         new Blob(
             [
-                "\uFEFF" + csv
+                "\uFEFF" +
+                csv
             ],
             {
                 type:
@@ -2286,40 +2375,51 @@ function exportCsv() {
             }
         );
 
+
     const url =
         URL.createObjectURL(
             blob
         );
 
+
     const link =
-        document.createElement(
-            "a"
-        );
+        document.createElement("a");
+
 
     link.href =
         url;
+
 
     link.download =
         `crud-master-export-${getDateOnly(
             new Date()
         )}.csv`;
 
+
     document.body.appendChild(
         link
     );
 
+
     link.click();
 
+
     link.remove();
+
 
     URL.revokeObjectURL(
         url
     );
 
+
     showToast(
         "success",
         "Export complete",
-        `${data.length} record${data.length === 1 ? "" : "s"} exported.`
+        `${data.length} record${
+            data.length === 1
+                ? ""
+                : "s"
+        } exported.`
     );
 
 }
@@ -2349,356 +2449,6 @@ function csvEscape(
 
 
 // =========================================================
-// CSV PARSER
-// =========================================================
-
-function parseCsv(
-    text
-) {
-
-    const rows = [];
-
-    let row = [];
-
-    let cell = "";
-
-    let quoted = false;
-
-    for (
-        let i = 0;
-        i < text.length;
-        i += 1
-    ) {
-
-        const char =
-            text[i];
-
-        const next =
-            text[i + 1];
-
-
-        if (
-            char === '"' &&
-            quoted &&
-            next === '"'
-        ) {
-
-            cell += '"';
-
-            i += 1;
-
-            continue;
-
-        }
-
-
-        if (
-            char === '"'
-        ) {
-
-            quoted =
-                !quoted;
-
-            continue;
-
-        }
-
-
-        if (
-            char === "," &&
-            !quoted
-        ) {
-
-            row.push(
-                cell
-            );
-
-            cell = "";
-
-            continue;
-
-        }
-
-
-        if (
-            (
-                char === "\n" ||
-                char === "\r"
-            ) &&
-            !quoted
-        ) {
-
-            if (
-                char === "\r" &&
-                next === "\n"
-            ) {
-
-                i += 1;
-
-            }
-
-            row.push(
-                cell
-            );
-
-            cell = "";
-
-            if (
-                row.some(
-                    value =>
-                        value.trim() !== ""
-                )
-            ) {
-
-                rows.push(
-                    row
-                );
-
-            }
-
-            row = [];
-
-            continue;
-
-        }
-
-        cell += char;
-
-    }
-
-
-    if (
-        cell.length ||
-        row.length
-    ) {
-
-        row.push(
-            cell
-        );
-
-        if (
-            row.some(
-                value =>
-                    value.trim() !== ""
-            )
-        ) {
-
-            rows.push(
-                row
-            );
-
-        }
-
-    }
-
-    return rows;
-
-}
-
-
-// =========================================================
-// CSV IMPORT
-// =========================================================
-
-async function importCsv(
-    file
-) {
-
-    if (!file) return;
-
-    try {
-
-        const text =
-            await file.text();
-
-        const rows =
-            parseCsv(text);
-
-        if (
-            rows.length < 2
-        ) {
-
-            throw new Error(
-                "CSV has no data rows."
-            );
-
-        }
-
-        const headers =
-            rows[0].map(
-                h =>
-                    h
-                        .trim()
-                        .toLowerCase()
-            );
-
-        const indexOf =
-            (names) =>
-                names
-                    .map(
-                        name =>
-                            headers.indexOf(
-                                name
-                            )
-                    )
-                    .find(
-                        index =>
-                            index >= 0
-                    ) ?? -1;
-
-        const nameIndex =
-            indexOf(["name"]);
-
-        const categoryIndex =
-            indexOf(["category"]);
-
-        const statusIndex =
-            indexOf(["status"]);
-
-        const descriptionIndex =
-            indexOf([
-                "description"
-            ]);
-
-        if (
-            nameIndex < 0 ||
-            categoryIndex < 0
-        ) {
-
-            throw new Error(
-                "CSV must contain Name and Category columns."
-            );
-
-        }
-
-        const data =
-            readData();
-
-        const now =
-            new Date().toISOString();
-
-        let imported = 0;
-
-        rows
-            .slice(1)
-            .forEach(
-                row => {
-
-                    const name =
-                        String(
-                            row[nameIndex] ||
-                            ""
-                        ).trim();
-
-                    const category =
-                        String(
-                            row[
-                                categoryIndex
-                            ] || ""
-                        ).trim();
-
-                    if (
-                        !name ||
-                        !category
-                    ) {
-                        return;
-                    }
-
-                    const rawStatus =
-                        String(
-                            statusIndex >= 0
-                                ? row[
-                                    statusIndex
-                                ]
-                                : "active"
-                        )
-                            .trim()
-                            .toLowerCase();
-
-                    const status =
-                        rawStatus ===
-                        "inactive"
-                            ? "inactive"
-                            : "active";
-
-                    data.unshift({
-
-                        id:
-                            createId(),
-
-                        name,
-
-                        category,
-
-                        status,
-
-                        description:
-                            String(
-                                descriptionIndex >= 0
-                                    ? row[
-                                        descriptionIndex
-                                    ] || ""
-                                    : ""
-                            ).trim(),
-
-                        images: [],
-
-                        image: "",
-
-                        createdAt:
-                            now,
-
-                        updatedAt:
-                            now
-
-                    });
-
-                    imported++;
-
-                }
-            );
-
-        writeData(
-            data
-        );
-
-        writeActivity(
-            "create",
-            `Imported ${imported} record${imported === 1 ? "" : "s"}`
-        );
-
-        currentPage =
-            1;
-
-        showToast(
-            "success",
-            "Import complete",
-            `${imported} record${imported === 1 ? "" : "s"} imported.`
-        );
-
-        renderTable();
-
-        notifyDataChanged();
-
-    } catch (error) {
-
-        console.error(
-            error
-        );
-
-        showToast(
-            "error",
-            "Import failed",
-            error.message ||
-            "Invalid CSV file."
-        );
-
-    }
-
-}
-
-
-// =========================================================
 // CLEAR FILTERS
 // =========================================================
 
@@ -2708,36 +2458,31 @@ function clearFilters() {
         "dataSearch",
         "dateFromFilter",
         "dateToFilter"
-
     ].forEach(
         id => {
 
             if ($(id)) {
-
-                $(id).value =
-                    "";
-
+                $(id).value = "";
             }
 
         }
     );
 
-    if ($("statusFilter")) {
 
+    if ($("statusFilter")) {
         $("statusFilter").value =
             "all";
-
     }
+
 
     if ($("categoryFilter")) {
-
         $("categoryFilter").value =
             "all";
-
     }
 
-    currentPage =
-        1;
+
+    currentPage = 1;
+
 
     renderTable();
 
@@ -2745,7 +2490,7 @@ function clearFilters() {
 
 
 // =========================================================
-// DATA CHANGE EVENT
+// DATA CHANGED EVENT
 // =========================================================
 
 function notifyDataChanged() {
@@ -2760,63 +2505,46 @@ function notifyDataChanged() {
 
 
 // =========================================================
-// CAPITALIZE
-// =========================================================
-
-function capitalize(
-    value = ""
-) {
-
-    return (
-        value.charAt(0)
-        .toUpperCase() +
-        value.slice(1)
-    );
-
-}
-
-
-// =========================================================
 // INITIALIZE
 // =========================================================
 
 function initializeCrud() {
 
-    if (initialized)
+    if (initialized) {
         return;
+    }
 
     initialized = true;
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // PAGE SIZE
-    // -------------------------------------------------------
+    // =====================================================
 
-    if (
-        $("pageSizeSelect")
-    ) {
+    if ($("pageSizeSelect")) {
 
-        $("pageSizeSelect")
-            .value =
+        $("pageSizeSelect").value =
             String(pageSize);
+
 
         $("pageSizeSelect")
             .addEventListener(
                 "change",
-                event => {
+                (event) => {
 
                     pageSize =
                         Number(
                             event.target.value
                         ) || 8;
 
+
                     localStorage.setItem(
                         PAGE_SIZE_KEY,
                         String(pageSize)
                     );
 
-                    currentPage =
-                        1;
+
+                    currentPage = 1;
 
                     selectedIds.clear();
 
@@ -2828,9 +2556,9 @@ function initializeCrud() {
     }
 
 
-    // -------------------------------------------------------
-    // ADD BUTTON
-    // -------------------------------------------------------
+    // =====================================================
+    // ADD
+    // =====================================================
 
     $("addDataButton")
         ?.addEventListener(
@@ -2840,15 +2568,16 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // MODAL
-    // -------------------------------------------------------
+    // =====================================================
 
     $("dataModalClose")
         ?.addEventListener(
             "click",
             closeModal
         );
+
 
     $("dataModalCancel")
         ?.addEventListener(
@@ -2864,66 +2593,27 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
-    // IMAGE INPUT
-    // -------------------------------------------------------
+    // =====================================================
+    // IMAGE
+    // =====================================================
 
-    $("dataImages")
+    $("dataImage")
         ?.addEventListener(
             "change",
-            event => {
-
-                handleImageSelection(
-                    event.target.files
-                );
-
-            }
+            handleImageChange
         );
 
 
-    // -------------------------------------------------------
-    // IMAGE REMOVE
-    // -------------------------------------------------------
-
-    $("imagePreview")
+    $("removeDataImage")
         ?.addEventListener(
             "click",
-            event => {
-
-                const button =
-                    event.target.closest(
-                        "[data-remove-image]"
-                    );
-
-                if (!button)
-                    return;
-
-                const index =
-                    Number(
-                        button.dataset
-                            .removeImage
-                    );
-
-                if (
-                    Number.isNaN(index)
-                ) {
-                    return;
-                }
-
-                selectedImages.splice(
-                    index,
-                    1
-                );
-
-                renderImagePreview();
-
-            }
+            removeImage
         );
 
 
-    // -------------------------------------------------------
-    // EXPORT / IMPORT
-    // -------------------------------------------------------
+    // =====================================================
+    // EXPORT
+    // =====================================================
 
     $("exportDataButton")
         ?.addEventListener(
@@ -2932,34 +2622,9 @@ function initializeCrud() {
         );
 
 
-    $("importDataButton")
-        ?.addEventListener(
-            "click",
-            () =>
-                $("importDataInput")
-                    ?.click()
-        );
-
-
-    $("importDataInput")
-        ?.addEventListener(
-            "change",
-            event => {
-
-                importCsv(
-                    event.target.files?.[0]
-                );
-
-                event.target.value =
-                    "";
-
-            }
-        );
-
-
-    // -------------------------------------------------------
-    // FILTERS
-    // -------------------------------------------------------
+    // =====================================================
+    // CLEAR
+    // =====================================================
 
     $("clearDataFilters")
         ?.addEventListener(
@@ -2968,11 +2633,14 @@ function initializeCrud() {
         );
 
 
+    // =====================================================
+    // SEARCH
+    // =====================================================
+
     [
         "dataSearch",
         "dateFromFilter",
         "dateToFilter"
-
     ].forEach(
         id => {
 
@@ -2980,8 +2648,7 @@ function initializeCrud() {
                 "input",
                 () => {
 
-                    currentPage =
-                        1;
+                    currentPage = 1;
 
                     renderTable();
 
@@ -2997,8 +2664,7 @@ function initializeCrud() {
             "change",
             () => {
 
-                currentPage =
-                    1;
+                currentPage = 1;
 
                 renderTable();
 
@@ -3011,8 +2677,7 @@ function initializeCrud() {
             "change",
             () => {
 
-                currentPage =
-                    1;
+                currentPage = 1;
 
                 renderTable();
 
@@ -3020,9 +2685,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
-    // BULK
-    // -------------------------------------------------------
+    // =====================================================
+    // SELECT ALL
+    // =====================================================
 
     $("selectAllData")
         ?.addEventListener(
@@ -3033,6 +2698,10 @@ function initializeCrud() {
                 )
         );
 
+
+    // =====================================================
+    // BULK ACTIONS
+    // =====================================================
 
     $("bulkActivateButton")
         ?.addEventListener(
@@ -3061,9 +2730,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // SORT
-    // -------------------------------------------------------
+    // =====================================================
 
     document
         .querySelectorAll(
@@ -3079,8 +2748,10 @@ function initializeCrud() {
                         const field =
                             button.dataset.sort;
 
+
                         if (
-                            sortField === field
+                            sortField ===
+                            field
                         ) {
 
                             sortDirection =
@@ -3102,8 +2773,8 @@ function initializeCrud() {
 
                         }
 
-                        currentPage =
-                            1;
+
+                        currentPage = 1;
 
                         renderTable();
 
@@ -3114,9 +2785,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
-    // ROW CHECKBOX
-    // -------------------------------------------------------
+    // =====================================================
+    // TABLE CHECKBOX
+    // =====================================================
 
     $("dataTableBody")
         ?.addEventListener(
@@ -3128,29 +2799,28 @@ function initializeCrud() {
                         ".row-checkbox"
                     );
 
-                if (!checkbox)
+                if (!checkbox) {
                     return;
+                }
+
 
                 const id =
                     checkbox.dataset.id;
 
-                if (
-                    checkbox.checked
-                ) {
 
-                    selectedIds.add(
-                        id
-                    );
+                if (checkbox.checked) {
+
+                    selectedIds.add(id);
 
                 } else {
 
-                    selectedIds.delete(
-                        id
-                    );
+                    selectedIds.delete(id);
 
                 }
 
+
                 updateBulkBar();
+
 
                 updateSelectAllState(
                     new Set(
@@ -3166,9 +2836,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // TABLE ACTIONS
-    // -------------------------------------------------------
+    // =====================================================
 
     $("dataTableBody")
         ?.addEventListener(
@@ -3180,8 +2850,10 @@ function initializeCrud() {
                         "[data-action]"
                     );
 
-                if (!button)
+                if (!button) {
                     return;
+                }
+
 
                 const action =
                     button.dataset.action;
@@ -3189,8 +2861,10 @@ function initializeCrud() {
                 const id =
                     button.dataset.id;
 
+
                 if (
-                    action === "view"
+                    action ===
+                    "view"
                 ) {
 
                     openModal(
@@ -3200,8 +2874,10 @@ function initializeCrud() {
 
                 }
 
+
                 if (
-                    action === "edit"
+                    action ===
+                    "edit"
                 ) {
 
                     openModal(
@@ -3211,24 +2887,23 @@ function initializeCrud() {
 
                 }
 
+
                 if (
-                    action === "delete"
+                    action ===
+                    "delete"
                 ) {
 
-                    deleteRecord(
-                        id
-                    );
+                    deleteRecord(id);
 
                 }
+
 
                 if (
                     action ===
                     "toggle-status"
                 ) {
 
-                    toggleStatus(
-                        id
-                    );
+                    toggleStatus(id);
 
                 }
 
@@ -3236,9 +2911,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // PAGINATION
-    // -------------------------------------------------------
+    // =====================================================
 
     $("paginationControls")
         ?.addEventListener(
@@ -3257,10 +2932,12 @@ function initializeCrud() {
                     return;
                 }
 
+
                 const page =
                     Number(
                         button.dataset.page
                     );
+
 
                 if (
                     !Number.isFinite(
@@ -3271,8 +2948,10 @@ function initializeCrud() {
                     return;
                 }
 
+
                 currentPage =
                     page;
+
 
                 renderTable();
 
@@ -3280,9 +2959,9 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // MODAL BACKDROP
-    // -------------------------------------------------------
+    // =====================================================
 
     $("dataModal")
         ?.addEventListener(
@@ -3302,32 +2981,31 @@ function initializeCrud() {
         );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // ESCAPE
-    // -------------------------------------------------------
+    // =====================================================
 
-    document
-        .addEventListener(
-            "keydown",
-            event => {
+    document.addEventListener(
+        "keydown",
+        event => {
 
-                if (
-                    event.key ===
-                    "Escape" &&
-                    !$("dataModal")?.hidden
-                ) {
+            if (
+                event.key === "Escape" &&
+                $("dataModal") &&
+                !$("dataModal").hidden
+            ) {
 
-                    closeModal();
-
-                }
+                closeModal();
 
             }
-        );
+
+        }
+    );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // QUICK ADD
-    // -------------------------------------------------------
+    // =====================================================
 
     window.addEventListener(
         "crud:open-add",
@@ -3336,9 +3014,9 @@ function initializeCrud() {
     );
 
 
-    // -------------------------------------------------------
+    // =====================================================
     // INITIAL RENDER
-    // -------------------------------------------------------
+    // =====================================================
 
     renderTable();
 

@@ -9,11 +9,6 @@ import { initSettings } from "./settings.js";
 // CRUD MASTER - MAIN APPLICATION
 // =========================================================
 
-
-// =========================================================
-// 1. DOM ELEMENTS
-// =========================================================
-
 const sidebar = document.getElementById("sidebar");
 const sidebarToggle = document.getElementById("sidebarToggle");
 const sidebarClose = document.getElementById("sidebarClose");
@@ -27,7 +22,7 @@ const pages = document.querySelectorAll(".page");
 
 
 // =========================================================
-// 2. PAGE CONFIGURATION
+// PAGE CONFIGURATION
 // =========================================================
 
 const pageConfig = {
@@ -64,12 +59,11 @@ const pageConfig = {
 
 
 // =========================================================
-// 3. GET CURRENT PAGE
+// GET CURRENT PAGE
 // =========================================================
 
 function getCurrentPage() {
-
-    const hash = window.location.hash.replace("#", "");
+    const hash = window.location.hash.replace("#", "").trim();
 
     if (pageConfig[hash]) {
         return hash;
@@ -80,7 +74,7 @@ function getCurrentPage() {
 
 
 // =========================================================
-// 4. SHOW PAGE
+// SHOW PAGE
 // =========================================================
 
 function showPage(pageName) {
@@ -89,164 +83,130 @@ function showPage(pageName) {
         pageName = "dashboard";
     }
 
-
-    // -----------------------------------------
     // Hide all pages
-    // -----------------------------------------
-
     pages.forEach((page) => {
-
         page.classList.remove("active");
-
         page.hidden = true;
-
     });
 
-
-    // -----------------------------------------
     // Show selected page
-    // -----------------------------------------
-
-    const targetPage =
-        document.getElementById(`${pageName}Page`);
+    const targetPage = document.getElementById(`${pageName}Page`);
 
     if (targetPage) {
-
         targetPage.hidden = false;
-
         targetPage.classList.add("active");
-
     }
 
-
-    // -----------------------------------------
     // Update navigation
-    // -----------------------------------------
-
     navItems.forEach((item) => {
-
-        item.classList.remove("active");
-
-        if (item.dataset.page === pageName) {
-            item.classList.add("active");
-        }
-
+        item.classList.toggle(
+            "active",
+            item.dataset.page === pageName
+        );
     });
 
+    // Update page title
+    if (pageTitle) {
+        pageTitle.textContent = pageConfig[pageName].title;
+    }
 
-    // -----------------------------------------
-    // Update topbar
-    // -----------------------------------------
+    if (pageSubtitle) {
+        pageSubtitle.textContent = pageConfig[pageName].subtitle;
+    }
 
-    pageTitle.textContent =
-        pageConfig[pageName].title;
-
-    pageSubtitle.textContent =
-        pageConfig[pageName].subtitle;
-
-
-    // -----------------------------------------
-    // Close mobile sidebar
-    // -----------------------------------------
-
+    // Close sidebar on mobile
     closeSidebar();
-
 }
 
 
 // =========================================================
-// 5. ROUTER
+// ROUTER
 // =========================================================
 
 function handleRoute() {
-
-    const pageName = getCurrentPage();
-
-    showPage(pageName);
-
+    showPage(getCurrentPage());
 }
 
 
-
 // =========================================================
-// 6. OPEN SIDEBAR
+// SIDEBAR
 // =========================================================
 
 function openSidebar() {
 
+    if (!sidebar) return;
+
     sidebar.classList.add("open");
 
-    sidebarOverlay.hidden = false;
+    if (sidebarOverlay) {
+        sidebarOverlay.hidden = false;
+        sidebarOverlay.classList.add("visible");
+    }
 
-    document.body.style.overflow = "hidden";
-
+    document.body.classList.add("sidebar-open");
 }
 
-
-// =========================================================
-// 7. CLOSE SIDEBAR
-// =========================================================
 
 function closeSidebar() {
 
-    sidebar.classList.remove("open");
+    if (sidebar) {
+        sidebar.classList.remove("open");
+    }
 
-    sidebarOverlay.hidden = true;
+    if (sidebarOverlay) {
+        sidebarOverlay.hidden = true;
+        sidebarOverlay.classList.remove("visible");
+    }
 
-    document.body.style.overflow = "";
-
+    document.body.classList.remove("sidebar-open");
 }
+
+
+// Toggle
+sidebarToggle?.addEventListener("click", () => {
+
+    if (sidebar?.classList.contains("open")) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+
+});
+
+
+// Close button
+sidebarClose?.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+// Overlay
+sidebarOverlay?.addEventListener(
+    "click",
+    closeSidebar
+);
 
 
 // =========================================================
-// 8. SIDEBAR TOGGLE
-// =========================================================
-
-if (sidebarToggle) {
-
-    sidebarToggle.addEventListener(
-        "click",
-        openSidebar
-    );
-
-}
-
-
-if (sidebarClose) {
-
-    sidebarClose.addEventListener(
-        "click",
-        closeSidebar
-    );
-
-}
-
-
-if (sidebarOverlay) {
-
-    sidebarOverlay.addEventListener(
-        "click",
-        closeSidebar
-    );
-
-}
-
-
-// =========================================================
-// 9. NAVIGATION CLICK
+// SIDEBAR NAVIGATION
 // =========================================================
 
 navItems.forEach((item) => {
 
-    item.addEventListener("click", () => {
+    item.addEventListener("click", (event) => {
 
         const pageName = item.dataset.page;
 
-        if (!pageName) {
+        if (!pageName || !pageConfig[pageName]) {
             return;
         }
 
+        event.preventDefault();
+
         window.location.hash = pageName;
+
+        closeSidebar();
 
     });
 
@@ -254,7 +214,7 @@ navItems.forEach((item) => {
 
 
 // =========================================================
-// 10. HASH CHANGE
+// HASH CHANGE
 // =========================================================
 
 window.addEventListener(
@@ -264,142 +224,174 @@ window.addEventListener(
 
 
 // =========================================================
-// 11. QUICK ACTIONS
+// QUICK ACTIONS
 // =========================================================
 
-const quickActions =
-    document.querySelectorAll(".quick-action");
+document
+    .querySelectorAll(".quick-action")
+    .forEach((button) => {
 
+        button.addEventListener("click", () => {
 
-quickActions.forEach((button) => {
+            const action = button.dataset.action;
 
-    button.addEventListener("click", () => {
+            if (action === "users") {
 
-        const action = button.dataset.action;
+                window.location.hash = "users";
 
-        if (action === "users") {
+            }
 
-            window.location.hash = "users";
+            else if (action === "reports") {
 
-        }
+                window.location.hash = "reports";
 
-        else if (action === "reports") {
+            }
 
-            window.location.hash = "reports";
+            else if (action === "settings") {
 
-        }
+                window.location.hash = "settings";
 
-        else if (action === "settings") {
+            }
 
-            window.location.hash = "settings";
+            else if (action === "add") {
 
-        }
+                window.location.hash = "data";
 
-        else if (action === "add") {
+                /*
+                 * Tunggu router selesai mengganti halaman
+                 * sebelum membuka modal.
+                 */
+                window.setTimeout(() => {
 
-            // Pindah ke halaman Data terlebih dahulu
-            window.location.hash = "data";
+                    window.dispatchEvent(
+                        new CustomEvent("crud:open-add")
+                    );
 
-            // Tunggu sampai halaman Data aktif,
-            // lalu buka modal Add Data
-            setTimeout(() => {
+                }, 50);
 
-                window.dispatchEvent(
-                    new CustomEvent("crud:open-add")
-                );
+            }
 
-            }, 50);
-
-        }
+        });
 
     });
 
-});
-
 
 // =========================================================
-// 12. PAGE LINK BUTTONS
+// PAGE LINK BUTTONS
 // =========================================================
 
-const pageLinkButtons =
-    document.querySelectorAll("[data-page-link]");
+document
+    .querySelectorAll("[data-page-link]")
+    .forEach((button) => {
 
+        button.addEventListener("click", (event) => {
 
-pageLinkButtons.forEach((button) => {
+            const pageName = button.dataset.pageLink;
 
-    button.addEventListener("click", () => {
+            if (!pageName || !pageConfig[pageName]) {
+                return;
+            }
 
-        const pageName =
-            button.dataset.pageLink;
+            event.preventDefault();
 
-        if (!pageName) {
-            return;
-        }
+            window.location.hash = pageName;
 
-        window.location.hash = pageName;
+        });
 
     });
 
-});
-
 
 // =========================================================
-// 13. NOTIFICATION BUTTON
+// NOTIFICATION BUTTON
 // =========================================================
 
 const notificationButton =
-    document.getElementById(
-        "notificationButton"
-    );
+    document.getElementById("notificationButton");
 
+notificationButton?.addEventListener(
+    "click",
+    () => {
 
-if (notificationButton) {
+        console.log(
+            "Notification system is not connected yet."
+        );
 
-    notificationButton.addEventListener(
-        "click",
-        () => {
-
-            console.log(
-                "Notification system will be added later."
-            );
-
-        }
-    );
-
-}
+    }
+);
 
 
 // =========================================================
-// 14. LOGOUT BUTTON
+// LOGOUT BUTTON
 // =========================================================
 
 const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
+    document.getElementById("logoutButton");
 
+logoutButton?.addEventListener(
+    "click",
+    () => {
 
-if (logoutButton) {
+        const confirmed = window.confirm(
+            "Are you sure you want to logout?"
+        );
 
-    logoutButton.addEventListener(
-        "click",
-        () => {
-
-            console.log(
-                "Logout system will be connected to Firebase later."
-            );
-
+        if (!confirmed) {
+            return;
         }
-    );
 
-}
+        console.log(
+            "Logout system will be connected later."
+        );
+
+    }
+);
 
 
 // =========================================================
-// 15. INITIALIZE APPLICATION
+// GLOBAL ESCAPE KEY
+// =========================================================
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Escape") {
+            closeSidebar();
+        }
+
+    }
+);
+
+
+// =========================================================
+// WINDOW RESIZE
+// =========================================================
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        /*
+         * Jangan biarkan sidebar mobile
+         * tetap terbuka ketika kembali ke desktop.
+         */
+        if (window.innerWidth > 1100) {
+            closeSidebar();
+        }
+
+    }
+);
+
+
+// =========================================================
+// INITIALIZE APPLICATION
 // =========================================================
 
 function initializeApp() {
+
+    console.log(
+        "===================================="
+    );
 
     console.log(
         "CRUD Master initialized."
@@ -410,20 +402,99 @@ function initializeApp() {
         getCurrentPage()
     );
 
+    console.log(
+        "===================================="
+    );
+
+
+    // Router
     handleRoute();
 
-    initializeCrud();
-    initializeDashboard();
-    initUsers();
-    initReports();
-    initProfile();
-    initSettings();
+
+    // CRUD
+    try {
+        initializeCrud();
+    } catch (error) {
+        console.error(
+            "CRUD initialization failed:",
+            error
+        );
+    }
+
+
+    // Dashboard
+    try {
+        initializeDashboard();
+    } catch (error) {
+        console.error(
+            "Dashboard initialization failed:",
+            error
+        );
+    }
+
+
+    // Users
+    try {
+        initUsers();
+    } catch (error) {
+        console.error(
+            "Users initialization failed:",
+            error
+        );
+    }
+
+
+    // Reports
+    try {
+        initReports();
+    } catch (error) {
+        console.error(
+            "Reports initialization failed:",
+            error
+        );
+    }
+
+
+    // Profile
+    try {
+        initProfile();
+    } catch (error) {
+        console.error(
+            "Profile initialization failed:",
+            error
+        );
+    }
+
+
+    // Settings
+    try {
+        initSettings();
+    } catch (error) {
+        console.error(
+            "Settings initialization failed:",
+            error
+        );
+    }
 
 }
 
 
 // =========================================================
-// 16. START APPLICATION
+// START
 // =========================================================
 
-initializeApp();
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeApp,
+        { once: true }
+    );
+
+} else {
+
+    initializeApp();
+
+}
