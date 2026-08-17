@@ -1,5 +1,9 @@
 import { initializeCrud } from "./crud.js";
 import { initializeDashboard } from "./dashboard.js";
+import { initUsers } from "./users.js";
+import { initReports } from "./report.js";
+import { initProfile } from "./profile.js";
+import { initSettings } from "./settings.js";
 
 // =========================================================
 // CRUD MASTER - MAIN APPLICATION
@@ -404,6 +408,10 @@ function initializeApp() {
 
     initializeCrud();
     initializeDashboard();
+    initUsers();
+    initReports();
+    initProfile();
+    initSettings();
 
 }
 

@@ -757,43 +757,34 @@
 
                 </div>
 
-                <div
-                    id="usersPage"
-                    class="page"
-                    hidden
-                >
-                    <h2>User Management</h2>
-                    <p>User management will be built here.</p>
+                <div id="usersPage" class="page" hidden>
+                    <div class="page-intro page-intro-actions"><div><h2>User Management</h2><p>Create, manage and control system users.</p></div><button id="addUserButton" class="btn btn-primary">+ Add User</button></div>
+                    <div class="data-stats-grid user-stats-grid">
+                        <div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Users</span><strong id="usersTotal">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="usersActive">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">A</div><div><span>Administrators</span><strong id="usersAdmins">0</strong></div></div>
+                        <div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="usersInactive">0</strong></div></div>
+                    </div>
+                    <section class="card"><div class="card-header"><div><h3>System Users</h3><p>Manage access, roles and account status.</p></div></div><div class="card-body"><div class="toolbar"><div class="toolbar-left data-filters"><div class="search-box toolbar-search"><span class="search-box-icon">⌕</span><input id="userSearch" class="form-input" placeholder="Search name or email..."></div><select id="userRoleFilter" class="form-select filter-select"><option value="all">All Roles</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="staff">Staff</option></select><select id="userStatusFilter" class="form-select filter-select"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead><tbody id="usersTableBody"></tbody></table></div></div></section>
+                    <div id="userModal" class="modal" hidden><div class="modal-container modal-lg"><div class="modal-header"><h3 id="userModalTitle" class="modal-title">Add New User</h3><button id="userModalClose" class="modal-close">×</button></div><form id="userForm"><div class="modal-body"><div class="form-grid"><div class="form-group"><label class="form-label">Full Name *</label><input id="userName" class="form-input" required maxlength="100"></div><div class="form-group"><label class="form-label">Email *</label><input id="userEmail" type="email" class="form-input" required></div><div class="form-group"><label class="form-label">Role</label><select id="userRole" class="form-select"><option value="admin">Admin</option><option value="manager">Manager</option><option value="staff" selected>Staff</option></select></div><div class="form-group"><label class="form-label">Status</label><select id="userStatus" class="form-select"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="form-group form-grid-full"><label class="form-label">Password <span class="muted">(demo only)</span></label><input id="userPassword" type="password" class="form-input" minlength="6" placeholder="Required when creating a user"></div></div></div><div class="modal-footer"><button type="button" id="userModalCancel" class="btn btn-secondary">Cancel</button><button class="btn btn-primary">Save User</button></div></form></div></div>
                 </div>
 
-
-                <div
-                    id="reportsPage"
-                    class="page"
-                    hidden
-                >
-                    <h2>Reports</h2>
-                    <p>Reports and analytics will be built here.</p>
+                <div id="reportsPage" class="page" hidden>
+                    <div class="page-intro page-intro-actions"><div><h2>Reports & Analytics</h2><p>Understand your records with quick summaries and trends.</p></div><div class="inline-actions"><button id="printReportButton" class="btn btn-secondary">Print</button><button id="exportReportButton" class="btn btn-primary">↓ Export CSV</button></div></div>
+                    <section class="card report-filter-card"><div class="card-body"><div class="report-filter-grid"><div><label class="form-label">From</label><input id="reportFrom" type="date" class="form-input"></div><div><label class="form-label">To</label><input id="reportTo" type="date" class="form-input"></div><div class="report-filter-actions"><button id="reportReset" class="btn btn-secondary">Reset</button></div></div></div></section>
+                    <div class="data-stats-grid"><div class="data-stat-card"><div class="data-stat-icon">#</div><div><span>Total Records</span><strong id="reportTotal">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">✓</div><div><span>Active</span><strong id="reportActive">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">○</div><div><span>Inactive</span><strong id="reportInactive">0</strong></div></div><div class="data-stat-card"><div class="data-stat-icon">◇</div><div><span>Categories</span><strong id="reportCategories">0</strong></div></div></div>
+                    <div class="reports-grid"><section class="card"><div class="card-header"><div><h3>Records by Category</h3><p>Distribution of your data.</p></div></div><div class="card-body"><div id="categoryChart" class="bar-chart"></div></div></section><section class="card"><div class="card-header"><div><h3>Records Added</h3><p>Recent daily activity.</p></div></div><div class="card-body"><div id="reportTimeline" class="timeline-chart"></div></div></section></div>
+                    <section class="card"><div class="card-header"><div><h3>Category Summary</h3><p>Detailed breakdown of the selected range.</p></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>Category</th><th>Total</th><th>Active</th><th>Inactive</th><th>Share</th></tr></thead><tbody id="reportTableBody"></tbody></table></div></section>
                 </div>
 
-
-                <div
-                    id="profilePage"
-                    class="page"
-                    hidden
-                >
-                    <h2>Profile</h2>
-                    <p>User profile will be built here.</p>
+                <div id="profilePage" class="page" hidden>
+                    <div class="page-intro"><div><h2>My Profile</h2><p>Manage your account information and security.</p></div></div>
+                    <div class="profile-layout"><section class="card profile-summary"><div class="profile-cover"></div><div class="profile-avatar-large" id="profileAvatar">A</div><div class="profile-summary-body"><h3 id="profileDisplayName">Admin</h3><p id="profileDisplayEmail">admin@example.com</p><span id="profileDisplayRole" class="badge badge-primary">Administrator</span></div></section><section class="card"><div class="card-header"><div><h3>Personal Information</h3><p>These details are displayed across the application.</p></div></div><form id="profileForm"><div class="card-body"><div class="form-grid"><div class="form-group"><label class="form-label">Full Name *</label><input id="profileName" class="form-input" required></div><div class="form-group"><label class="form-label">Email *</label><input id="profileEmail" type="email" class="form-input" required></div><div class="form-group"><label class="form-label">Phone</label><input id="profilePhone" class="form-input" placeholder="Optional"></div><div class="form-group"><label class="form-label">Position</label><input id="profilePosition" class="form-input"></div><div class="form-group form-grid-full"><label class="form-label">Bio</label><textarea id="profileBio" class="form-textarea" maxlength="300"></textarea></div></div></div><div class="modal-footer profile-footer"><button class="btn btn-primary">Save Changes</button></div></form></section><section class="card"><div class="card-header"><div><h3>Change Password</h3><p>Update your password for this account.</p></div></div><form id="changePasswordForm"><div class="card-body"><div class="form-grid"><div class="form-group form-grid-full"><label class="form-label">Current Password</label><input id="currentPassword" type="password" class="form-input" required></div><div class="form-group"><label class="form-label">New Password</label><input id="newPassword" type="password" class="form-input" minlength="6" required></div><div class="form-group"><label class="form-label">Confirm Password</label><input id="confirmPassword" type="password" class="form-input" minlength="6" required></div></div></div><div class="modal-footer profile-footer"><button class="btn btn-secondary">Update Password</button></div></form></section></div>
                 </div>
 
-
-                <div
-                    id="settingsPage"
-                    class="page"
-                    hidden
-                >
-                    <h2>Settings</h2>
-                    <p>System settings will be built here.</p>
+                <div id="settingsPage" class="page" hidden>
+                    <div class="page-intro page-intro-actions"><div><h2>Settings</h2><p>Customize the application to match your workflow.</p></div><button id="resetSettingsButton" class="btn btn-ghost">Reset Defaults</button></div>
+                    <form id="settingsForm"><div class="settings-grid"><section class="card"><div class="card-header"><div><h3>General</h3><p>Branding and business information.</p></div></div><div class="card-body"><div class="form-group"><label class="form-label">Business Name</label><input id="settingBusinessName" class="form-input"></div><div class="form-group"><label class="form-label">Subtitle</label><input id="settingBusinessSubtitle" class="form-input"></div></div></section><section class="card"><div class="card-header"><div><h3>Appearance</h3><p>Adjust the interface to your preference.</p></div></div><div class="card-body"><div class="form-group"><label class="form-label">Rows per page</label><select id="settingItemsPerPage" class="form-select"><option value="8">8</option><option value="15">15</option><option value="25">25</option><option value="50">50</option></select></div><div class="form-group"><label class="form-label">Density</label><select id="settingDensity" class="form-select"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></div><div class="form-group"><label class="form-label">Accent</label><select id="settingAccent" class="form-select"><option value="blue">Blue</option><option value="violet">Violet</option><option value="green">Green</option></select></div></div></section><section class="card"><div class="card-header"><div><h3>Notifications</h3><p>Choose which local alerts you want to see.</p></div></div><div class="card-body settings-toggles"><label class="setting-toggle"><span><strong>Notifications</strong><small>Show application notifications.</small></span><input id="settingNotifications" type="checkbox"><i></i></label><label class="setting-toggle"><span><strong>Activity alerts</strong><small>Track activity changes in the dashboard.</small></span><input id="settingActivityAlerts" type="checkbox"><i></i></label><label class="setting-toggle"><span><strong>Confirm deletion</strong><small>Ask before destructive actions.</small></span><input id="settingConfirmDelete" type="checkbox"><i></i></label></div></section></div><div class="settings-save"><button class="btn btn-primary btn-lg">Save Settings</button></div></form>
                 </div>
 
             </section>
@@ -891,10 +882,7 @@
          JAVASCRIPT
     ========================== -->
 
-    <script
-        type="module"
-        src="./assets/js/app.js"
-    ></script>
+    <script type="module" src="./assets/js/app.js"></script>
 
 </body>
 </html>
