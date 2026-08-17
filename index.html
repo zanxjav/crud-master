@@ -628,8 +628,81 @@
                     class="page"
                     hidden
                 >
-                    <h2>Data Management</h2>
-                    <p>CRUD data management will be built here.</p>
+
+                    <div class="page-intro">
+                        <div>
+                            <h2>Data Management</h2>
+                            <p>Create, manage, search, and organize your records.</p>
+                        </div>
+                    </div>
+
+                    <section class="card">
+
+                        <div class="card-header">
+                            <div>
+                                <h3>All Data</h3>
+                                <p>Manage your business records from one place.</p>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="toolbar">
+                                <div class="toolbar-left">
+                                    <div class="search-box toolbar-search">
+                                        <span class="search-box-icon">⌕</span>
+                                        <input
+                                            type="search"
+                                            id="dataSearch"
+                                            class="form-input"
+                                            placeholder="Search data..."
+                                            autocomplete="off"
+                                        >
+                                    </div>
+
+                                    <select id="statusFilter" class="form-select">
+                                        <option value="all">All Status</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+
+                                <div class="toolbar-right">
+                                    <button type="button" id="addDataButton" class="btn btn-primary">
+                                        <span>+</span> Add Data
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="table-wrapper">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dataTableBody">
+                                        <tr>
+                                            <td colspan="6" class="table-empty">Loading...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="pagination">
+                            <span id="paginationInfo" class="pagination-info">0 records</span>
+                            <div id="paginationControls" class="pagination-controls"></div>
+                        </div>
+
+                    </section>
+
                 </div>
 
 
@@ -673,6 +746,62 @@
                 </div>
 
             </section>
+
+
+            <!-- =========================
+                 DATA MODAL
+            ========================== -->
+
+            <div id="dataModal" class="modal" hidden>
+                <div class="modal-container modal-lg">
+                    <div class="modal-header">
+                        <h3 id="dataModalTitle" class="modal-title">Add New Data</h3>
+                        <button type="button" id="dataModalClose" class="modal-close" aria-label="Close">×</button>
+                    </div>
+
+                    <form id="dataForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="dataId">
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="dataName">Name <span class="required">*</span></label>
+                                    <input type="text" id="dataName" class="form-input" placeholder="Enter name" maxlength="100" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="dataCategory">Category <span class="required">*</span></label>
+                                    <input type="text" id="dataCategory" class="form-input" placeholder="Enter category" maxlength="60" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="dataStatus">Status</label>
+                                    <select id="dataStatus" class="form-select">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group form-grid-full">
+                                    <label class="form-label" for="dataDescription">Description</label>
+                                    <textarea id="dataDescription" class="form-textarea" placeholder="Optional description" maxlength="500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="dataModalCancel" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" id="dataSaveButton" class="btn btn-primary">Save Data</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- =========================
+                 TOASTS
+            ========================== -->
+
+            <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
 
             <!-- =========================

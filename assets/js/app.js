@@ -1,3 +1,6 @@
+import { initializeCrud } from "./crud.js";
+import { initializeDashboard } from "./dashboard.js";
+
 // =========================================================
 // CRUD MASTER - MAIN APPLICATION
 // =========================================================
@@ -293,6 +296,10 @@ quickActions.forEach((button) => {
 
             window.location.hash = "data";
 
+            window.dispatchEvent(
+                new CustomEvent("crud:open-add")
+            );
+
         }
 
     });
@@ -394,6 +401,9 @@ function initializeApp() {
     );
 
     handleRoute();
+
+    initializeCrud();
+    initializeDashboard();
 
 }
 
