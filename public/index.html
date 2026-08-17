@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,211 +17,291 @@
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
+    <!-- ========================================
+         HEADER / NAVBAR
+    ========================================= -->
 
-<header>
-    <nav class="container nav">
+    <header>
+        <nav class="container nav">
 
-        <a class="brand" href="#home">
-            <b>LOGO</b>
-            <strong>[Nama Organisasi]</strong>
-        </a>
-
-        <button id="menuBtn" aria-label="Buka menu">
-            ☰
-        </button>
-
-        <div id="nav">
-
-            <a href="#home">
-                Beranda
+            <a class="brand" href="#home">
+                <b>LOGO</b>
+                <strong>[Nama Organisasi]</strong>
             </a>
 
-            <a href="#about">
-                Tentang
-            </a>
+            <button
+                id="menuBtn"
+                type="button"
+                aria-label="Buka menu"
+            >
+                ☰
+            </button>
 
-            <a href="#programs">
-                Program
-            </a>
+            <div id="nav">
 
-            <a href="#events">
-                Kegiatan
-            </a>
+                <a href="#home">
+                    Beranda
+                </a>
 
-            <a href="#news">
-                Berita
-            </a>
+                <a href="#about">
+                    Tentang
+                </a>
 
-            <a href="#gallery">
-                Galeri
-            </a>
+                <a href="#programs">
+                    Program
+                </a>
 
-            <a href="#contact">
-                Kontak
-            </a>
+                <a href="#events">
+                    Kegiatan
+                </a>
 
-            <!-- ADMIN DEMO -->
-            <a class="admin" href="/crud-master/admin/">Admin</a>
-                Admin
-            </a>
+                <a href="#news">
+                    Berita
+                </a>
 
-        </div>
+                <a href="#gallery">
+                    Galeri
+                </a>
 
-    </nav>
-</header>
+                <a href="#contact">
+                    Kontak
+                </a>
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main>
-
-    <!-- HERO -->
-    <section id="home" class="hero">
-
-        <div class="container hero-grid">
-
-            <div>
-
-                <p class="eyebrow">
-                    WEBSITE RESMI
-                </p>
-
-                <h1>
-                    [NAMA<br>
-                    <span>ORGANISASI]</span>
-                </h1>
-
-                <p>
-                    [Tagline atau deskripsi singkat organisasi.
-                    Jelaskan tujuan utama organisasi secara ringkas
-                    dan menarik.]
-                </p>
-
-                <div class="actions">
-
-                    <a
-                        class="btn primary"
-                        href="#about"
-                    >
-                        Tentang Kami →
-                    </a>
-
-                    <a
-                        class="btn ghost"
-                        href="#programs"
-                    >
-                        Lihat Program
-                    </a>
-
-                </div>
+                <!-- ADMIN PANEL -->
+                <a
+                    class="admin"
+                    href="/crud-master/admin/"
+                >
+                    Admin
+                </a>
 
             </div>
 
+        </nav>
+    </header>
 
-            <div class="visual">
 
-                <small>
-                    VISUAL UTAMA
-                </small>
+    <!-- ========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main>
+
+        <!-- ====================================
+             HERO
+        ==================================== -->
+
+        <section id="home" class="hero">
+
+            <div class="container hero-grid">
 
                 <div>
-                    FOTO / BANNER<br>
-                    ORGANISASI
+
+                    <p class="eyebrow">
+                        WEBSITE RESMI
+                    </p>
+
+                    <h1>
+                        [NAMA<br>
+                        <span>ORGANISASI]</span>
+                    </h1>
+
+                    <p>
+                        [Tagline atau deskripsi singkat organisasi.
+                        Jelaskan tujuan utama organisasi secara ringkas
+                        dan menarik.]
+                    </p>
+
+                    <div class="actions">
+
+                        <a
+                            class="btn primary"
+                            href="#about"
+                        >
+                            Tentang Kami →
+                        </a>
+
+                        <a
+                            class="btn ghost"
+                            href="#programs"
+                        >
+                            Lihat Program
+                        </a>
+
+                    </div>
+
                 </div>
 
-                <small>
-                    [LOCATION] · [YEAR]
-                </small>
+
+                <div class="visual">
+
+                    <small>
+                        VISUAL UTAMA
+                    </small>
+
+                    <div>
+                        FOTO / BANNER<br>
+                        ORGANISASI
+                    </div>
+
+                    <small>
+                        [LOCATION] · [YEAR]
+                    </small>
+
+                </div>
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- STATS -->
-    <section class="stats">
+        <!-- ====================================
+             STATISTICS
+        ==================================== -->
 
-        <div class="container statgrid">
+        <section class="stats">
 
-            <div>
-                <b>00+</b>
-                <span>Anggota</span>
+            <div class="container statgrid">
+
+                <div>
+                    <b>00+</b>
+                    <span>Anggota</span>
+                </div>
+
+                <div>
+                    <b>00+</b>
+                    <span>Program</span>
+                </div>
+
+                <div>
+                    <b>00+</b>
+                    <span>Kegiatan</span>
+                </div>
+
+                <div>
+                    <b>00+</b>
+                    <span>Mitra</span>
+                </div>
+
             </div>
 
-            <div>
-                <b>00+</b>
-                <span>Program</span>
+        </section>
+
+
+        <!-- ====================================
+             ABOUT
+        ==================================== -->
+
+        <section id="about" class="section">
+
+            <div class="container two">
+
+                <div>
+
+                    <p class="eyebrow">
+                        TENTANG KAMI
+                    </p>
+
+                    <h2>
+                        Membangun organisasi yang
+                        <em>
+                            aktif, kolaboratif, dan berdampak.
+                        </em>
+                    </h2>
+
+                </div>
+
+
+                <div>
+
+                    <p>
+                        [Deskripsi organisasi.
+                        Ceritakan siapa Anda, apa yang Anda lakukan,
+                        dan siapa yang ingin Anda layani.]
+                    </p>
+
+                    <p>
+                        [Sejarah singkat atau latar belakang organisasi.]
+                    </p>
+
+
+                    <div class="mini">
+
+                        <article>
+
+                            <b>01</b>
+
+                            <h3>
+                                Visi
+                            </h3>
+
+                            <p>
+                                [Visi organisasi]
+                            </p>
+
+                        </article>
+
+
+                        <article>
+
+                            <b>02</b>
+
+                            <h3>
+                                Misi
+                            </h3>
+
+                            <p>
+                                [Misi organisasi]
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div>
-                <b>00+</b>
-                <span>Kegiatan</span>
-            </div>
-
-            <div>
-                <b>00+</b>
-                <span>Mitra</span>
-            </div>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- ABOUT -->
-    <section id="about" class="section">
+        <!-- ====================================
+             PROGRAMS
+        ==================================== -->
 
-        <div class="container two">
+        <section id="programs" class="section muted">
 
-            <div>
+            <div class="container">
 
                 <p class="eyebrow">
-                    TENTANG KAMI
+                    PROGRAM
                 </p>
 
                 <h2>
-                    Membangun organisasi yang
+                    Program
                     <em>
-                        aktif, kolaboratif, dan berdampak.
+                        unggulan.
                     </em>
                 </h2>
 
-            </div>
 
-
-            <div>
-
-                <p>
-                    [Deskripsi organisasi.
-                    Ceritakan siapa Anda, apa yang Anda lakukan,
-                    dan siapa yang ingin Anda layani.]
-                </p>
-
-                <p>
-                    [Sejarah singkat atau latar belakang organisasi.]
-                </p>
-
-
-                <div class="mini">
+                <div class="cards">
 
                     <article>
 
                         <b>01</b>
 
                         <h3>
-                            Visi
+                            [Nama Program]
                         </h3>
 
                         <p>
-                            [Visi organisasi]
+                            [Deskripsi program dan manfaatnya.]
                         </p>
+
+                        <a href="#contact">
+                            Selengkapnya →
+                        </a>
 
                     </article>
 
@@ -230,11 +311,372 @@
                         <b>02</b>
 
                         <h3>
-                            Misi
+                            [Nama Program]
                         </h3>
 
                         <p>
-                            [Misi organisasi]
+                            [Deskripsi program dan manfaatnya.]
+                        </p>
+
+                        <a href="#contact">
+                            Selengkapnya →
+                        </a>
+
+                    </article>
+
+
+                    <article>
+
+                        <b>03</b>
+
+                        <h3>
+                            [Nama Program]
+                        </h3>
+
+                        <p>
+                            [Deskripsi program dan manfaatnya.]
+                        </p>
+
+                        <a href="#contact">
+                            Selengkapnya →
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================
+             EVENTS
+        ==================================== -->
+
+        <section id="events" class="section">
+
+            <div class="container">
+
+                <p class="eyebrow">
+                    AGENDA
+                </p>
+
+                <h2>
+                    Kegiatan
+                    <em>
+                        terdekat.
+                    </em>
+                </h2>
+
+
+                <div class="events">
+
+                    <article>
+
+                        <time>
+                            <b>12</b>
+                            SEP 2026
+                        </time>
+
+                        <div>
+
+                            <small>
+                                SEMINAR
+                            </small>
+
+                            <h3>
+                                [Judul Kegiatan]
+                            </h3>
+
+                            <p>
+                                [Deskripsi singkat]
+                                · 📍 [Lokasi]
+                            </p>
+
+                        </div>
+
+                        <a href="#contact">
+                            Detail →
+                        </a>
+
+                    </article>
+
+
+                    <article>
+
+                        <time>
+                            <b>24</b>
+                            SEP 2026
+                        </time>
+
+                        <div>
+
+                            <small>
+                                WORKSHOP
+                            </small>
+
+                            <h3>
+                                [Judul Kegiatan]
+                            </h3>
+
+                            <p>
+                                [Deskripsi singkat]
+                                · 📍 [Lokasi]
+                            </p>
+
+                        </div>
+
+                        <a href="#contact">
+                            Detail →
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================
+             NEWS
+        ==================================== -->
+
+        <section id="news" class="section muted">
+
+            <div class="container">
+
+                <p class="eyebrow">
+                    INFORMASI
+                </p>
+
+                <h2>
+                    Berita &
+                    <em>
+                        artikel.
+                    </em>
+                </h2>
+
+
+                <div class="news">
+
+                    <article>
+
+                        <div class="ph">
+                            IMAGE
+                        </div>
+
+                        <small>
+                            BERITA
+                        </small>
+
+                        <h3>
+                            [Judul Berita]
+                        </h3>
+
+                        <p>
+                            [Ringkasan berita terbaru.]
+                        </p>
+
+                        <a href="#contact">
+                            Baca selengkapnya →
+                        </a>
+
+                    </article>
+
+
+                    <article>
+
+                        <div class="ph">
+                            IMAGE
+                        </div>
+
+                        <small>
+                            ARTIKEL
+                        </small>
+
+                        <h3>
+                            [Judul Artikel]
+                        </h3>
+
+                        <p>
+                            [Ringkasan artikel.]
+                        </p>
+
+                        <a href="#contact">
+                            Baca selengkapnya →
+                        </a>
+
+                    </article>
+
+
+                    <article>
+
+                        <div class="ph">
+                            IMAGE
+                        </div>
+
+                        <small>
+                            PENGUMUMAN
+                        </small>
+
+                        <h3>
+                            [Judul Pengumuman]
+                        </h3>
+
+                        <p>
+                            [Ringkasan pengumuman.]
+                        </p>
+
+                        <a href="#contact">
+                            Baca selengkapnya →
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================
+             GALLERY
+        ==================================== -->
+
+        <section id="gallery" class="section">
+
+            <div class="container">
+
+                <p class="eyebrow">
+                    DOKUMENTASI
+                </p>
+
+                <h2>
+                    Galeri
+                    <em>
+                        kegiatan.
+                    </em>
+                </h2>
+
+
+                <div class="gallery">
+
+                    <div>
+                        FOTO KEGIATAN
+                    </div>
+
+                    <div>
+                        FOTO
+                    </div>
+
+                    <div>
+                        FOTO
+                    </div>
+
+                    <div>
+                        FOTO
+                    </div>
+
+                    <div>
+                        FOTO
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================
+             TEAM
+        ==================================== -->
+
+        <section class="section muted">
+
+            <div class="container">
+
+                <p class="eyebrow">
+                    PENGURUS
+                </p>
+
+                <h2>
+                    Kenali
+                    <em>
+                        tim kami.
+                    </em>
+                </h2>
+
+
+                <div class="team">
+
+                    <article>
+
+                        <div>
+                            PHOTO
+                        </div>
+
+                        <h3>
+                            [Nama Pengurus]
+                        </h3>
+
+                        <p>
+                            [Jabatan]
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <div>
+                            PHOTO
+                        </div>
+
+                        <h3>
+                            [Nama Pengurus]
+                        </h3>
+
+                        <p>
+                            [Jabatan]
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <div>
+                            PHOTO
+                        </div>
+
+                        <h3>
+                            [Nama Pengurus]
+                        </h3>
+
+                        <p>
+                            [Jabatan]
+                        </p>
+
+                    </article>
+
+
+                    <article>
+
+                        <div>
+                            PHOTO
+                        </div>
+
+                        <h3>
+                            [Nama Pengurus]
+                        </h3>
+
+                        <p>
+                            [Jabatan]
                         </p>
 
                     </article>
@@ -243,630 +685,226 @@
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- PROGRAM -->
-    <section id="programs" class="section muted">
+        <!-- ====================================
+             CONTACT
+        ==================================== -->
 
-        <div class="container">
+        <section id="contact" class="contact">
 
-            <p class="eyebrow">
-                PROGRAM
-            </p>
+            <div class="container contactgrid">
 
-            <h2>
-                Program
-                <em>
-                    unggulan.
-                </em>
-            </h2>
+                <div>
 
-
-            <div class="cards">
-
-                <article>
-
-                    <b>01</b>
-
-                    <h3>
-                        [Nama Program]
-                    </h3>
-
-                    <p>
-                        [Deskripsi program dan manfaatnya.]
+                    <p class="eyebrow">
+                        HUBUNGI KAMI
                     </p>
 
-                    <a href="#contact">
-                        Selengkapnya →
-                    </a>
-
-                </article>
-
-
-                <article>
-
-                    <b>02</b>
-
-                    <h3>
-                        [Nama Program]
-                    </h3>
+                    <h2>
+                        Terhubung dengan
+                        <em>
+                            [Nama Organisasi].
+                        </em>
+                    </h2>
 
                     <p>
-                        [Deskripsi program dan manfaatnya.]
+                        [Gunakan bagian ini untuk pertanyaan,
+                        kolaborasi, pendaftaran, atau kebutuhan lainnya.]
                     </p>
-
-                    <a href="#contact">
-                        Selengkapnya →
-                    </a>
-
-                </article>
-
-
-                <article>
-
-                    <b>03</b>
-
-                    <h3>
-                        [Nama Program]
-                    </h3>
 
                     <p>
-                        [Deskripsi program dan manfaatnya.]
+                        Email:
+                        [email@organisasi.com]
+                        <br>
+
+                        Telepon:
+                        [+62 xxx xxxx]
+                        <br>
+
+                        Alamat:
+                        [Alamat Organisasi]
                     </p>
 
-                    <a href="#contact">
-                        Selengkapnya →
-                    </a>
+                </div>
 
-                </article>
+
+                <form id="form">
+
+                    <label>
+                        Nama
+
+                        <input
+                            required
+                            name="name"
+                            placeholder="Nama lengkap"
+                        >
+                    </label>
+
+
+                    <label>
+                        Email
+
+                        <input
+                            required
+                            type="email"
+                            name="email"
+                            placeholder="email@example.com"
+                        >
+                    </label>
+
+
+                    <label>
+                        Subjek
+
+                        <input
+                            required
+                            name="subject"
+                            placeholder="Subjek"
+                        >
+                    </label>
+
+
+                    <label>
+                        Pesan
+
+                        <textarea
+                            required
+                            name="message"
+                            rows="5"
+                            placeholder="Pesan..."
+                        ></textarea>
+
+                    </label>
+
+
+                    <button
+                        class="btn primary"
+                        type="submit"
+                    >
+                        Kirim Pesan →
+                    </button>
+
+
+                    <p id="msg"></p>
+
+                </form>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+    </main>
 
 
-    <!-- EVENTS -->
-    <section id="events" class="section">
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
 
-        <div class="container">
+    <footer>
 
-            <p class="eyebrow">
-                AGENDA
-            </p>
-
-            <h2>
-                Kegiatan
-                <em>
-                    terdekat.
-                </em>
-            </h2>
-
-
-            <div class="events">
-
-                <article>
-
-                    <time>
-                        <b>12</b>
-                        SEP 2026
-                    </time>
-
-
-                    <div>
-
-                        <small>
-                            SEMINAR
-                        </small>
-
-                        <h3>
-                            [Judul Kegiatan]
-                        </h3>
-
-                        <p>
-                            [Deskripsi singkat]
-                            · 📍 [Lokasi]
-                        </p>
-
-                    </div>
-
-
-                    <a href="#contact">
-                        Detail →
-                    </a>
-
-                </article>
-
-
-                <article>
-
-                    <time>
-                        <b>24</b>
-                        SEP 2026
-                    </time>
-
-
-                    <div>
-
-                        <small>
-                            WORKSHOP
-                        </small>
-
-                        <h3>
-                            [Judul Kegiatan]
-                        </h3>
-
-                        <p>
-                            [Deskripsi singkat]
-                            · 📍 [Lokasi]
-                        </p>
-
-                    </div>
-
-
-                    <a href="#contact">
-                        Detail →
-                    </a>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- NEWS -->
-    <section id="news" class="section muted">
-
-        <div class="container">
-
-            <p class="eyebrow">
-                INFORMASI
-            </p>
-
-            <h2>
-                Berita &
-                <em>
-                    artikel.
-                </em>
-            </h2>
-
-
-            <div class="news">
-
-                <article>
-
-                    <div class="ph">
-                        IMAGE
-                    </div>
-
-                    <small>
-                        BERITA
-                    </small>
-
-                    <h3>
-                        [Judul Berita]
-                    </h3>
-
-                    <p>
-                        [Ringkasan berita terbaru.]
-                    </p>
-
-                    <a href="#contact">
-                        Baca selengkapnya →
-                    </a>
-
-                </article>
-
-
-                <article>
-
-                    <div class="ph">
-                        IMAGE
-                    </div>
-
-                    <small>
-                        ARTIKEL
-                    </small>
-
-                    <h3>
-                        [Judul Artikel]
-                    </h3>
-
-                    <p>
-                        [Ringkasan artikel.]
-                    </p>
-
-                    <a href="#contact">
-                        Baca selengkapnya →
-                    </a>
-
-                </article>
-
-
-                <article>
-
-                    <div class="ph">
-                        IMAGE
-                    </div>
-
-                    <small>
-                        PENGUMUMAN
-                    </small>
-
-                    <h3>
-                        [Judul Pengumuman]
-                    </h3>
-
-                    <p>
-                        [Ringkasan pengumuman.]
-                    </p>
-
-                    <a href="#contact">
-                        Baca selengkapnya →
-                    </a>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- GALLERY -->
-    <section id="gallery" class="section">
-
-        <div class="container">
-
-            <p class="eyebrow">
-                DOKUMENTASI
-            </p>
-
-            <h2>
-                Galeri
-                <em>
-                    kegiatan.
-                </em>
-            </h2>
-
-
-            <div class="gallery">
-
-                <div>
-                    FOTO KEGIATAN
-                </div>
-
-                <div>
-                    FOTO
-                </div>
-
-                <div>
-                    FOTO
-                </div>
-
-                <div>
-                    FOTO
-                </div>
-
-                <div>
-                    FOTO
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- TEAM -->
-    <section class="section muted">
-
-        <div class="container">
-
-            <p class="eyebrow">
-                PENGURUS
-            </p>
-
-            <h2>
-                Kenali
-                <em>
-                    tim kami.
-                </em>
-            </h2>
-
-
-            <div class="team">
-
-                <article>
-
-                    <div>
-                        PHOTO
-                    </div>
-
-                    <h3>
-                        [Nama Pengurus]
-                    </h3>
-
-                    <p>
-                        [Jabatan]
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div>
-                        PHOTO
-                    </div>
-
-                    <h3>
-                        [Nama Pengurus]
-                    </h3>
-
-                    <p>
-                        [Jabatan]
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div>
-                        PHOTO
-                    </div>
-
-                    <h3>
-                        [Nama Pengurus]
-                    </h3>
-
-                    <p>
-                        [Jabatan]
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div>
-                        PHOTO
-                    </div>
-
-                    <h3>
-                        [Nama Pengurus]
-                    </h3>
-
-                    <p>
-                        [Jabatan]
-                    </p>
-
-                </article>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- CONTACT -->
-    <section id="contact" class="contact">
-
-        <div class="container contactgrid">
+        <div class="container foot">
 
             <div>
 
-                <p class="eyebrow">
-                    HUBUNGI KAMI
-                </p>
-
-                <h2>
-                    Terhubung dengan
-                    <em>
-                        [Nama Organisasi].
-                    </em>
-                </h2>
+                <b>
+                    [Nama Organisasi]
+                </b>
 
                 <p>
-                    [Gunakan bagian ini untuk pertanyaan,
-                    kolaborasi, pendaftaran, atau kebutuhan lainnya.]
-                </p>
-
-                <p>
-                    Email:
-                    [email@organisasi.com]
-                    <br>
-
-                    Telepon:
-                    [+62 xxx xxxx]
-                    <br>
-
-                    Alamat:
-                    [Alamat Organisasi]
+                    [Deskripsi singkat organisasi.]
                 </p>
 
             </div>
 
 
-            <form id="form">
+            <div>
 
-                <label>
-                    Nama
+                <b>
+                    Navigasi
+                </b>
 
-                    <input
-                        required
-                        name="name"
-                        placeholder="Nama lengkap"
-                    >
-                </label>
+                <a href="#about">
+                    Tentang
+                </a>
 
+                <a href="#programs">
+                    Program
+                </a>
 
-                <label>
-                    Email
+                <a href="#events">
+                    Kegiatan
+                </a>
 
-                    <input
-                        required
-                        type="email"
-                        name="email"
-                        placeholder="email@example.com"
-                    >
-                </label>
+                <a href="#news">
+                    Berita
+                </a>
 
-
-                <label>
-                    Subjek
-
-                    <input
-                        required
-                        name="subject"
-                        placeholder="Subjek"
-                    >
-                </label>
+            </div>
 
 
-                <label>
-                    Pesan
+            <div>
 
-                    <textarea
-                        required
-                        name="message"
-                        rows="5"
-                        placeholder="Pesan..."
-                    ></textarea>
+                <b>
+                    Informasi
+                </b>
 
-                </label>
+                <a href="#gallery">
+                    Galeri
+                </a>
 
+                <a href="#contact">
+                    Kontak
+                </a>
 
-                <button
-                    class="btn primary"
-                    type="submit"
-                >
-                    Kirim Pesan →
-                </button>
+                <!-- ADMIN PANEL -->
+                <a href="/crud-master/admin/">
+                    Admin Panel
+                </a>
 
-
-                <p id="msg"></p>
-
-            </form>
-
-        </div>
-
-    </section>
-
-</main>
+            </div>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+            <div>
 
-<footer>
+                <b>
+                    Sosial
+                </b>
 
-    <div class="container foot">
+                <span>
+                    [Instagram]
+                </span>
 
-        <div>
+                <span>
+                    [Facebook]
+                </span>
 
-            <b>
-                [Nama Organisasi]
-            </b>
+                <span>
+                    [YouTube]
+                </span>
 
-            <p>
-                [Deskripsi singkat organisasi.]
-            </p>
+            </div>
 
         </div>
 
 
-        <div>
+        <div class="copy container">
 
-            <b>
-                Navigasi
-            </b>
-
-            <a href="#about">
-                Tentang
-            </a>
-
-            <a href="#programs">
-                Program
-            </a>
-
-            <a href="#events">
-                Kegiatan
-            </a>
-
-            <a href="#news">
-                Berita
-            </a>
+            © 2026 [Nama Organisasi]
+            · Organization Website Template
 
         </div>
 
-
-        <div>
-
-            <b>
-                Informasi
-            </b>
-
-            <a href="#gallery">
-                Galeri
-            </a>
-
-            <a href="#contact">
-                Kontak
-            </a>
-
-            <!-- ADMIN DEMO -->
-            <a href="/crud-master/admin/">Admin Panel</a>
-                Admin Panel
-            </a>
-
-        </div>
+    </footer>
 
 
-        <div>
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
 
-            <b>
-                Sosial
-            </b>
-
-            <span>
-                [Instagram]
-            </span>
-
-            <span>
-                [Facebook]
-            </span>
-
-            <span>
-                [YouTube]
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="copy container">
-        © 2026 [Nama Organisasi]
-        · Organization Website Template
-    </div>
-
-</footer>
-
-
-<script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js"></script>
 
 </body>
+
 </html>
